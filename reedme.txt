@@ -1,0 +1,6 @@
+fix the appText component,
+add coulours into a variables,
+complete styling drawer menu,
+add click on the location featuar,
+add Hz siding component,
+add Material Top Tabs Navigator for ( all , restorant ,cafe) in landing screen,
