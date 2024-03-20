@@ -1,6 +1,19 @@
-fix the appText component,
 add coulours into a variables,
-complete styling drawer menu,
-add click on the location featuar,
-add Hz siding component,
-add Material Top Tabs Navigator for ( all , restorant ,cafe) in landing screen,
+fix the appText component,
+orgenise imports,
+fix the botoom sheet component (pull to close and be close at the begining),
+add click on the location featuar,!!!!!!
+add Hz sliding component,
+********************************
+complete styling drawer menu,90%
+
+add Material Top Tabs Navigator for ( all , restorant ,cafe) in landing screen,80%
+[fix the name note completely displayed and make the header transparent from the batom (gradiant)]
+
+style the bottom sheet content,20%
+add google map featuar to it,10%
+********************************
+style card with image and dynamic info,
+make the app more dynamic (ok ,name ,location,card,...),
+hide the search field from the header when scroll down and show when scroll up,
+close the keyboark when open bottomsheet,

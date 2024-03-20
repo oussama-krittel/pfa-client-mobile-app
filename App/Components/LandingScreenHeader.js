@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-
+import { Ionicons } from "@expo/vector-icons";
 import {
   View,
   TextInput,
@@ -8,14 +8,16 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; 
+import colors from "../styles/colors";
 import AppText from "./AppText";
 
-const CustomHeader = ({ onNotificationPress }) => {
+export default function LandingScreenHeader({ openBottomSheet }) {
   const navigation = useNavigation();
+
   const onMenuPress = () => {
     navigation.openDrawer();
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.topView}>
@@ -23,7 +25,10 @@ const CustomHeader = ({ onNotificationPress }) => {
           <Ionicons name="menu" size={26} color="white" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.addressContainer}>
+        <TouchableOpacity
+          style={styles.addressContainer}
+          onPress={openBottomSheet}
+        >
           <AppText
             style={styles.addressText}
             numberOfLines={1}
@@ -40,8 +45,8 @@ const CustomHeader = ({ onNotificationPress }) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={onNotificationPress}>
-          <Ionicons name="notifications" size={26} color="white" />
+        <TouchableOpacity>
+          <Ionicons name="help-circle-outline" size={30} color="white" />
         </TouchableOpacity>
       </View>
 
@@ -55,7 +60,7 @@ const CustomHeader = ({ onNotificationPress }) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   icons: {
@@ -68,15 +73,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 5,
-    backgroundColor: "#f4511e",
-    height: 150,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    backgroundColor: colors.primary,
+    height: 155,
   },
   textInput: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: "#ccc",
     borderRadius: 5,
     paddingHorizontal: 10,
     marginTop: 5,
@@ -118,5 +118,3 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
-
-export default CustomHeader;

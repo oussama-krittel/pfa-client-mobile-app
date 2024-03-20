@@ -1,14 +1,14 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { DrawerItem, createDrawerNavigator } from "@react-navigation/drawer";
 import { DrawerItemList } from "@react-navigation/drawer";
-import { getHeaderTitle } from "@react-navigation/elements";
 
-import Screen from "../Components/Screen";
+import colors from "../styles/colors";
+
 import DrawerHeader from "../Components/DrawerHeader";
-import LandingScreenHeader from "../Components/LandingScreenHeader";
-
-import LandingScreen from "../Screens/LandingScreen";
+import Screen from "../Components/Screen";
+import { Ionicons } from "@expo/vector-icons";
+import LandingScreenStack from "./LandingScreenStack";
 
 const Drawer = createDrawerNavigator();
 
@@ -17,8 +17,11 @@ export default function MyDrawer() {
     <Drawer.Navigator
       initialRouteName="landing"
       screenOptions={{
+        drawerActiveTintColor: colors.secondary,
+        drawerActiveBackgroundColor: colors.light,
+        drawerLabelStyle: { marginLeft: -15 },
         headerStyle: {
-          backgroundColor: "#f4511e",
+          backgroundColor: colors.primary,
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
@@ -30,37 +33,71 @@ export default function MyDrawer() {
           <View style={{ flex: 1 }}>
             <DrawerHeader />
             <DrawerItemList {...props} />
+            <DrawerItem
+              label={"LogOut"}
+              icon={({ color, size }) => (
+                <Ionicons
+                  name="exit-outline"
+                  size={size}
+                  color={color}
+                  style={{ marginRight: -15 }}
+                />
+              )}
+            />
           </View>
         );
       }}
     >
       <Drawer.Screen
-        name="landing"
-        component={LandingScreen}
+        name="Home"
+        component={LandingScreenStack}
         options={{
-          drawerLabel: "landing",
-          header: ({ navigation, route, options }) => {
-            const title = getHeaderTitle(options, route.name);
-            return (
-              <LandingScreenHeader title={title} style={options.headerStyle} />
-            );
-          },
+          drawerLabel: "Home",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name="home-outline" size={size} color={color} />
+          ),
+          headerShown: false,
         }}
       />
       <Drawer.Screen
-        name="Feed"
+        name="Rewards"
         component={Feed}
-        options={{ drawerLabel: "Home" }}
+        options={{
+          drawerLabel: "Rewards",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name="gift-outline" size={size} color={color} />
+          ),
+        }}
       />
       <Drawer.Screen
-        name="Notifications"
+        name="near By"
+        component={Map}
+        options={{
+          drawerLabel: "near By",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name="location-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Area/Region"
         component={Notifications}
-        options={{ drawerLabel: "Updates" }}
+        options={{
+          drawerLabel: "Area/Region",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name="earth-outline" size={size} color={color} />
+          ),
+        }}
       />
       <Drawer.Screen
         name="Profile"
         component={Profile}
-        options={{ drawerLabel: "Profile" }}
+        options={{
+          drawerLabel: "Profile",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name="person-outline" size={size} color={color} />
+          ),
+        }}
       />
     </Drawer.Navigator>
   );
@@ -69,7 +106,7 @@ export default function MyDrawer() {
 function Feed() {
   return (
     <Screen style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Feed Screen</Text>
+      <Text> Screen</Text>
     </Screen>
   );
 }
@@ -77,7 +114,7 @@ function Feed() {
 function Notifications() {
   return (
     <Screen style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Notifications Screen</Text>
+      <Text> Screen</Text>
     </Screen>
   );
 }
@@ -86,6 +123,14 @@ function Profile() {
   return (
     <Screen style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Profile Screen</Text>
+    </Screen>
+  );
+}
+
+function Map() {
+  return (
+    <Screen style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Feed Screen</Text>
     </Screen>
   );
 }

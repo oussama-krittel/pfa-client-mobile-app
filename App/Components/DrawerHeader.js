@@ -1,12 +1,15 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
+
+import colors from "../styles/colors";
+
 import AppText from "../Components/AppText";
 
 function DrawerHeader(props) {
   return (
     <View style={styles.header}>
       <View style={styles.circle}>
-        <Text style={styles.circleText}>O</Text>
+        <Text style={styles.circleText}>OK</Text>
       </View>
       <AppText style={styles.headerText}>Hi Oussama,</AppText>
     </View>
@@ -20,11 +23,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
     height: 200,
-    justifyContent: "center",
-    backgroundColor: "#f4511e",
+    justifyContent: "space-evenly",
+    backgroundColor: colors.primary,
     paddingLeft: 16,
   },
   circle: {

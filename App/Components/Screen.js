@@ -9,7 +9,7 @@ export default function Screen({ children, style }) {
     <SafeAreaView style={[{ flex: 1 }, style]}>
       <View style={[{ flex: 1 }, style]}>
         {children}
-        <StatusBar style="auto"   />
+        <StatusBar style="auto" />
       </View>
     </SafeAreaView>
   );
