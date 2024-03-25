@@ -1,12 +1,25 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
+import colors from "../styles/colors";
+import AppText from "./AppText";
 
-function Card({ card }) {
+function Card({ card, onPress }) {
+  const imagePath = require("../../assets/image1.png"); // Update the path as needed
+
   return (
-    <View style={styles.card}>
-      {/* Render your card component here */}
-      <Text>{card}</Text>
-    </View>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.card}>
+        <ImageBackground source={imagePath} style={styles.backgroundImage}>
+          <AppText style={{ color: "white" }}>cart {card.id}</AppText>
+        </ImageBackground>
+      </View>
+    </TouchableOpacity>
   );
 }
 
@@ -17,9 +30,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     height: 160,
     borderRadius: 10,
-    padding: 20,
     marginRight: 15,
-    width: 260, // Adjust according to your card content
-    // Add more styles as needed for your card
+    width: 260,
+    overflow: "hidden",
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover", // or 'stretch' or 'contain'
+    justifyContent: "center",
+    height: 160,
+    borderRadius: 10,
+    width: 260,
   },
 });

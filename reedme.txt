@@ -1,19 +1,51 @@
 add coulours into a variables,
 fix the appText component,
-orgenise imports,
 fix the botoom sheet component (pull to close and be close at the begining),
 add click on the location featuar,!!!!!!
 add Hz sliding component,
 ********************************
+orgenise imports and files and naming convension,50%
 complete styling drawer menu,90%
-
-add Material Top Tabs Navigator for ( all , restorant ,cafe) in landing screen,80%
-[fix the name note completely displayed and make the header transparent from the batom (gradiant)]
-
 style the bottom sheet content,20%
-add google map featuar to it,10%
+add google map featuar to it,50%
+make the app more dynamic (ok ,name ,location,card,...),70%
+add the setLocation screen bottomsheet and style it ,5%  (add click on a button to change loctiton state)
+hide the search field from the header when scroll down and show when scroll up,40%
 ********************************
 style card with image and dynamic info,
-make the app more dynamic (ok ,name ,location,card,...),
-hide the search field from the header when scroll down and show when scroll up,
+reloade the app when give the permitio via settings,
+resolve markerLocation.formatedAdress is undifined,
+most likely i dont neet the address state in the setLocationScreen,
+add click on a card ot navigate the the resto/cafe page using id, (mosh)
+whan the user with no permition clickon devise location aleart him go to settings,(adjustement)
 close the keyboark when open bottomsheet,
+allow permition from the app second time,!!!!
+
+
+
+
+
+
+codes:
+
+
+
+
+
+const reverseGeocode = async (latitude, longitude) => {
+  const apiKey = 'YOUR_API_KEY'; // Replace with your API key
+  const apiUrl = `https://api.example.com/reverse-geocode?lat=${latitude}&lon=${longitude}&apiKey=${apiKey}`;
+
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    
+    // Parse the response data to extract address information
+    const address = data.address;
+    console.log('Reverse Geocoded Address:', address);
+    return address;
+  } catch (error) {
+    console.error('Error fetching reverse geocode:', error);
+    return null;
+  }
+};

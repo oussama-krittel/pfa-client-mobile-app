@@ -10,9 +10,20 @@ import {
 } from "react-native";
 import colors from "../styles/colors";
 import AppText from "./AppText";
+import { useSelector } from "react-redux";
+import store from "../context/store";
+import { useState, useEffect } from "react";
 
-export default function LandingScreenHeader({ openBottomSheet }) {
-  const navigation = useNavigation();
+export default function LandingScreenHeader({
+  openBottomSheet,
+  scrollDirection,
+  navigation,
+}) {
+  const location = useSelector((state) => state.location);
+
+  store.subscribe(() => {
+    console.log("store changed");
+  });
 
   const onMenuPress = () => {
     navigation.openDrawer();
@@ -29,34 +40,57 @@ export default function LandingScreenHeader({ openBottomSheet }) {
           style={styles.addressContainer}
           onPress={openBottomSheet}
         >
-          <AppText
-            style={styles.addressText}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            hay tilila reu 22, residance taghazout
-          </AppText>
-          <Text
-            style={styles.addressText}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            agadir,
-          </Text>
+          {location ? (
+            <>
+              <AppText
+                style={styles.addressText}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {location.district},{location.street}
+              </AppText>
+              <Text
+                style={styles.addressText}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {location.city},{location.region}, {location.country},
+              </Text>
+            </>
+          ) : (
+            <View style={styles.placeholderContainer}>
+              <Ionicons
+                name="location-outline"
+                size={20}
+                color="white"
+                style={styles.locationIcon}
+              />
+              <Text style={styles.placeholderText}>Set your location </Text>
+            </View>
+          )}
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("tutorielScreens")}
+        >
           <Ionicons name="help-circle-outline" size={30} color="white" />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.SearchContainer}>
-        <Ionicons name="search" size={24} color="#ccc" style={styles.icon} />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Recherche des restaurants ou des cafés..."
-          placeholderTextColor="#ccc"
-        />
+      <View>
+        <View
+          style={[
+            styles.SearchContainer,
+            // { height: 0, paddingVertical: 0, paddingHorizontal: 0 },
+          ]}
+        >
+          <Ionicons name="search" size={24} color="#ccc" style={styles.icon} />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Recherche des restaurants ou des cafés..."
+            placeholderTextColor="#ccc"
+          />
+        </View>
       </View>
     </View>
   );
@@ -74,7 +108,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 5,
     backgroundColor: colors.primary,
-    height: 155,
+    // height: 155,
   },
   textInput: {
     borderRadius: 5,
@@ -92,10 +126,26 @@ const styles = StyleSheet.create({
     width: 250,
     height: 50,
     overflow: "hidden",
+    marginTop: 3,
   },
   addressText: {
     color: "white",
     fontWeight: "bold",
+  },
+  placeholderContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 11,
+  },
+  placeholderText: {
+    color: "white",
+    fontSize: 20,
+    marginLeft: 5,
+  },
+  locationIcon: {
+    fontSize: 25,
+    marginBottom: 5,
   },
 
   SearchContainer: {
@@ -105,8 +155,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
+    marginBottom: 10,
   },
   textInput: {
     paddingLeft: 10,
