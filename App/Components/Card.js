@@ -10,12 +10,10 @@ import colors from "../styles/colors";
 import AppText from "./AppText";
 
 function Card({ card, onPress }) {
-  const imagePath = require("../../assets/image1.png"); // Update the path as needed
-
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.card}>
-        <ImageBackground source={imagePath} style={styles.backgroundImage}>
+        <ImageBackground source={card.img} style={styles.backgroundImage}>
           <AppText style={{ color: "white" }}>cart {card.id}</AppText>
         </ImageBackground>
       </View>
@@ -36,7 +34,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: "cover", // or 'stretch' or 'contain'
+    resizeMode: "cover",
     justifyContent: "center",
     height: 160,
     borderRadius: 10,

@@ -1,11 +1,16 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
+import { Alert } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import LandingScreen from "../Screens/LandingScreen";
 import SetLocationScreen from "../Screens/SetLocationScreen";
 import RestorantScreen from "../Screens/RestorantScreen";
+import DichScreen from "../Screens/DichScreen";
 import AppText from "../Components/AppText";
+import colors from "../styles/colors";
+import BasketScreen from "../Screens/BasketScreen";
 
 const Stack = createStackNavigator();
 
@@ -36,9 +41,9 @@ export default function LandingScreenStack() {
           headerTintColor: "#1DE8E1",
           headerRight: () => (
             <Ionicons
-              name="heart-outline"//conditionnaly render name="heart"
+              name="heart-outline" //conditionnaly render name="heart"
               size={25}
-              color="red"
+              color={colors.primary}
               style={{ marginRight: 7 }}
             />
           ),
@@ -46,9 +51,37 @@ export default function LandingScreenStack() {
         })}
       />
       <Stack.Screen
-        name="tutorielScreens"
-        component={TutorielScreen}
-        options={{ title: "tutorial" }}
+        name="dishScreen"
+        component={DichScreen}
+        options={({ navigation }) => ({
+          presentation: "modal",
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#fff",
+                borderRadius: 20,
+                padding: 6,
+                marginLeft: 8,
+              }}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Ionicons
+                name="close-outline"
+                size={28}
+                color={colors.secondary}
+              />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="basketScreen"
+        component={BasketScreen}
+        options={{ title: "Basket" }}
       />
     </Stack.Navigator>
   );

@@ -11,11 +11,11 @@ export default function LandingScreen({ navigation }) {
   const bottomSheetRef = useRef(null);
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const data = [
-    { id: 1, img: "../../assets/image1.png", title: "Card 1" },
-    { id: 2, img: "../../assets/image2.jpeg", title: "Card 2" },
-    { id: 3, img: "../../assets/image3.jpeg", title: "Card 3" },
-    { id: 4, img: "../../assets/image4.jpeg", title: "Card 4" },
-    { id: 5, img: "../../assets/images.jpeg", title: "Card 5" },
+    { id: 1, img: require("../../assets/image1.png"), title: "Card 1" },
+    { id: 2, img: require("../../assets/image2.jpeg"), title: "Card 2" },
+    { id: 3, img: require("../../assets/image3.jpeg"), title: "Card 3" },
+    { id: 4, img: require("../../assets/image4.jpeg"), title: "Card 4" },
+    { id: 5, img: require("../../assets/images.jpeg"), title: "Card 5" },
   ];
 
   const openBottomSheet = () => {
@@ -28,22 +28,21 @@ export default function LandingScreen({ navigation }) {
     setBottomSheetVisible(false);
   };
 
-  const [scrollDirection, setScrollDirection] = useState("down");
-  const [offset, setOffset] = useState(0);
+  // const [scrollDirection, setScrollDirection] = useState("down");
+  // const [offset, setOffset] = useState(0);
 
-  const handleScroll = (event) => {
-    const currentOffset = event.nativeEvent.contentOffset.y;
-    const threshold = 30;
-    const direction =
-      currentOffset > offset + threshold
-        ? "down"
-        : currentOffset < offset - threshold
-        ? "up"
-        : scrollDirection;
-    setScrollDirection(direction);
-    setOffset(currentOffset);
-  };
-
+  // const handleScroll = (event) => {
+  //   const currentOffset = event.nativeEvent.contentOffset.y;
+  //   const threshold = 30;
+  //   const direction =
+  //     currentOffset > offset + threshold
+  //       ? "down"
+  //       : currentOffset < offset - threshold
+  //       ? "up"
+  //       : scrollDirection;
+  //   setScrollDirection(direction);
+  //   setOffset(currentOffset);
+  // };
   // useEffect(() => {
   //   console.log("Scroll direction:", scrollDirection);
   // }, [scrollDirection]);
@@ -52,7 +51,6 @@ export default function LandingScreen({ navigation }) {
     <View style={styles.container}>
       <LandingScreenHeader
         openBottomSheet={openBottomSheet}
-        scrollDirection={scrollDirection}
         navigation={navigation}
       />
       <TouchableOpacity
@@ -63,7 +61,7 @@ export default function LandingScreen({ navigation }) {
         activeOpacity={1}
         onPress={closeBottomSheet}
       />
-      <ScrollView style={{ flex: 1 }} onScroll={handleScroll}>
+      <ScrollView style={{ flex: 1 }}>
         <HorizontalScrollComponent
           title="Most popular"
           cards={data}

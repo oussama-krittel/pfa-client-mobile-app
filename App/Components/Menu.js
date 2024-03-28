@@ -7,13 +7,14 @@ import {
   Image,
   SectionList,
 } from "react-native";
-
-import { Link } from "@react-navigation/native";
 import colors from "../styles/colors";
 
-export default function Menu() {
+export default function Menu({ DATA, navigation }) {
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity
+      style={styles.item}
+      onPress={() => navigation.navigate("dishScreen", { item: item })}
+    >
       <View style={{ flex: 1 }}>
         <Text style={styles.dish}>{item.name}</Text>
         <Text style={styles.dishText}>{item.info}</Text>
@@ -77,111 +78,3 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
 });
-
-//  *******************************************     data       ***********************************
-
-const DATA = [
-  {
-    title: "Starters",
-    data: [
-      {
-        id: 1,
-        name: "Garlic Bread",
-        info: "Toasted bread with garlic",
-        price: 5.99,
-        img: require("../../assets/image1.png"),
-      },
-      {
-        id: 2,
-        name: "Caesar Salad",
-        info: "Fresh salad with Caesar dressing",
-        price: 8.99,
-        img: require("../../assets/image2.jpeg"),
-      },
-      // Add more starter items here if needed
-      {
-        id: 3,
-        name: "Bruschetta",
-        info: "Toasted bread topped with tomatoes, basil, and olive oil",
-        price: 6.99,
-        img: require("../../assets/image3.jpeg"), // Reusing the third image
-      },
-      {
-        id: 4,
-        name: "Mozzarella Sticks",
-        info: "Fried mozzarella cheese sticks with marinara sauce",
-        price: 7.99,
-        img: require("../../assets/image4.jpeg"), // Reusing the fourth image
-      },
-    ],
-  },
-  {
-    title: "Main Courses",
-    data: [
-      {
-        id: 5,
-        name: "Spaghetti Bolognese",
-        info: "Classic Italian pasta dish",
-        price: 12.99,
-        img: require("../../assets/image3.jpeg"),
-      },
-      {
-        id: 6,
-        name: "Grilled Salmon",
-        info: "Freshly grilled salmon fillet",
-        price: 15.99,
-        img: require("../../assets/image4.jpeg"),
-      },
-      // Add more main course items here if needed
-      {
-        id: 7,
-        name: "Chicken Parmesan",
-        info: "Breaded chicken topped with marinara sauce and melted cheese",
-        price: 14.99,
-        img: require("../../assets/image1.png"), // Reusing the first image
-      },
-      {
-        id: 8,
-        name: "Vegetable Stir Fry",
-        info: "Assorted vegetables stir-fried in a savory sauce",
-        price: 11.99,
-        img: require("../../assets/image2.jpeg"), // Reusing the second image
-      },
-    ],
-  },
-  // Add more sections if needed
-  {
-    title: "Desserts",
-    data: [
-      {
-        id: 9,
-        name: "Chocolate Cake",
-        info: "Rich chocolate cake with icing",
-        price: 7.99,
-        img: require("../../assets/image1.png"),
-      },
-      {
-        id: 10,
-        name: "Tiramisu",
-        info: "Classic Italian dessert with coffee flavor",
-        price: 9.99,
-        img: require("../../assets/image2.jpeg"),
-      },
-      // Add more dessert items here if needed
-      {
-        id: 11,
-        name: "Cheesecake",
-        info: "Creamy cheesecake with a graham cracker crust",
-        price: 8.99,
-        img: require("../../assets/image3.jpeg"), // Reusing the third image
-      },
-      {
-        id: 12,
-        name: "Fruit Salad",
-        info: "Fresh fruit salad with honey-lime dressing",
-        price: 6.99,
-        img: require("../../assets/image4.jpeg"), // Reusing the fourth image
-      },
-    ],
-  },
-];
