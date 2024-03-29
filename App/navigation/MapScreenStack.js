@@ -1,34 +1,28 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 
-import LandingScreen from "../Screens/LandingScreen";
-import SetLocationScreen from "../Screens/SetLocationScreen";
 import RestorantScreen from "../Screens/RestorantScreen";
 import DichScreen from "../Screens/DichScreen";
 import AppText from "../Components/AppText";
 import colors from "../styles/colors";
 import BasketScreen from "../Screens/BasketScreen";
+import MapScreen from "../Screens/mapScreen";
 
 const Stack = createStackNavigator();
 
-export default function LandingScreenStack() {
+function MapScreenStack(props) {
   return (
     <Stack.Navigator
     // mode="modal"
     // screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
-        name="Landing"
-        component={LandingScreen}
+        name="map Screen"
+        component={MapScreen}
         options={{
           headerShown: false,
         }}
-      />
-      <Stack.Screen
-        name="SetLocation"
-        component={SetLocationScreen}
-        options={{ title: "set your location" }}
       />
       <Stack.Screen
         name="RestorantScreen"
@@ -81,27 +75,8 @@ export default function LandingScreenStack() {
         component={BasketScreen}
         options={{ title: "Basket" }}
       />
-      <Stack.Screen
-        name="tutorielScreens"
-        component={TutorielScreen}
-        options={{ title: "Basket" }}
-      />
     </Stack.Navigator>
   );
 }
 
-function TutorielScreen() {
-  return (
-    <View style={styles.container}>
-      <AppText>tutorial</AppText>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+export default MapScreenStack;

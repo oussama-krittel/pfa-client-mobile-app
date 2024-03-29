@@ -1,63 +1,25 @@
 import React from "react";
-import { Text, View, StyleSheet, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
+import FavorisScreen from "../Screens/FavorisScreen";
+import RecentlyUsedScreen from "../Screens/RecentlyUsedScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
 const MyTabs = () => {
   return (
     <Tab.Navigator
-      initialRouteName="All"
+      initialRouteName="Favorites"
       initialLayout={{ width: Dimensions.get("window").width }}
+      tabBarOptions={{
+        labelStyle: { fontSize: 12, fontWeight: "bold" }, // Customize label style
+      }}
     >
-      <Tab.Screen name="All" component={AllScreen} />
-      <Tab.Screen name="Favorites" component={FavoritesScreen} />
-      <Tab.Screen name="deals" component={DealScreen} />
-      <Tab.Screen name="points" component={Pointscreen} />
+      <Tab.Screen name="Favorites" component={FavorisScreen} />
+      <Tab.Screen name="recently used" component={RecentlyUsedScreen} />
     </Tab.Navigator>
   );
 };
 
 export default MyTabs;
-
-// AllScreen component
-const AllScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>All Screen</Text>
-    </View>
-  );
-};
-
-// FavoritesScreen component
-const FavoritesScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Favorites Screen</Text>
-    </View>
-  );
-};
-
-// DealScreen component
-const DealScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>speacial offers Screen</Text>
-    </View>
-  );
-};
-
-// Pointscreen component
-const Pointscreen = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Points Screen</Text>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "red",
-  },
-});

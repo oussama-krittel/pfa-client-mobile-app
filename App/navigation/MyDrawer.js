@@ -2,13 +2,15 @@ import React from "react";
 import { Text, View } from "react-native";
 import { DrawerItem, createDrawerNavigator } from "@react-navigation/drawer";
 import { DrawerItemList } from "@react-navigation/drawer";
-
-import colors from "../styles/colors";
-
 import DrawerHeader from "../Components/DrawerHeader";
 import Screen from "../Components/Screen";
 import { Ionicons } from "@expo/vector-icons";
+
+import MapScreenStack from "./MapScreenStack";
+import colors from "../styles/colors";
 import LandingScreenStack from "./LandingScreenStack";
+import SearchScreen from "../Screens/SearchScreen";
+import MyTabs from "./TopTabs";
 
 const Drawer = createDrawerNavigator();
 
@@ -60,35 +62,37 @@ export default function MyDrawer() {
         }}
       />
       <Drawer.Screen
-        name="Rewards"
-        component={Feed}
+        name="Search"
+        component={SearchScreen}
         options={{
-          drawerLabel: "Rewards",
+          drawerLabel: "Search",
           drawerIcon: ({ size, color }) => (
-            <Ionicons name="gift-outline" size={size} color={color} />
+            <Ionicons name="search" size={size} color={color} />
           ),
         }}
       />
       <Drawer.Screen
-        name="near By"
-        component={Map}
+        name="Favorite"
+        component={MyTabs}
         options={{
-          drawerLabel: "near By",
+          drawerLabel: "Favorite",
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name="star-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="map"
+        component={MapScreenStack}
+        options={{
+          headerShown: false,
+          drawerLabel: "Our partners",
           drawerIcon: ({ size, color }) => (
             <Ionicons name="location-outline" size={size} color={color} />
           ),
         }}
       />
-      <Drawer.Screen
-        name="Area/Region"
-        component={Notifications}
-        options={{
-          drawerLabel: "Area/Region",
-          drawerIcon: ({ size, color }) => (
-            <Ionicons name="earth-outline" size={size} color={color} />
-          ),
-        }}
-      />
+
       <Drawer.Screen
         name="Profile"
         component={Profile}
@@ -103,34 +107,10 @@ export default function MyDrawer() {
   );
 }
 
-function Feed() {
-  return (
-    <Screen style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text> Screen</Text>
-    </Screen>
-  );
-}
-
-function Notifications() {
-  return (
-    <Screen style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text> Screen</Text>
-    </Screen>
-  );
-}
-
 function Profile() {
   return (
     <Screen style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Profile Screen</Text>
-    </Screen>
-  );
-}
-
-function Map() {
-  return (
-    <Screen style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Feed Screen</Text>
     </Screen>
   );
 }

@@ -28,7 +28,7 @@ add favoris page with two section favoris and alredy visited restaurants,
 if ther is no reso in the reagion display where not there yet were expanding hopfuly will be there soon with change location button,
 chage the restorant screen add feedback,!!!!!!!!!!!!!!!
 alear are you sure if want to exit restoscreen when the basket is not empty,
-
+fix navigatin create sershstack and map stack;
 
 
 

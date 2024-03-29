@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import {
   View,
@@ -8,11 +8,10 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
+
+import store from "../context/store";
 import colors from "../styles/colors";
 import AppText from "./AppText";
-import { useSelector } from "react-redux";
-import store from "../context/store";
-import { useState, useEffect } from "react";
 
 export default function LandingScreenHeader({
   openBottomSheet,
@@ -77,7 +76,7 @@ export default function LandingScreenHeader({
         </TouchableOpacity>
       </View>
 
-      <View>
+      <TouchableOpacity onPress={() => navigation.navigate("Search")}>
         <View
           style={[
             styles.SearchContainer,
@@ -85,13 +84,9 @@ export default function LandingScreenHeader({
           ]}
         >
           <Ionicons name="search" size={24} color="#ccc" style={styles.icon} />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Recherche des restaurants ou des cafés..."
-            placeholderTextColor="#ccc"
-          />
+          <AppText style={styles.textInput}>Recherche ...</AppText>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -114,6 +109,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginTop: 5,
+    color: "#ccc",
   },
   topView: {
     width: "100%",
