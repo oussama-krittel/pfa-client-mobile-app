@@ -8,6 +8,7 @@ import {
   SectionList,
 } from "react-native";
 import colors from "../styles/colors";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Menu({ DATA, navigation }) {
   const renderItem = ({ item }) => (
@@ -25,29 +26,31 @@ export default function Menu({ DATA, navigation }) {
   );
 
   return (
-    <SectionList
-      contentContainerStyle={{ paddingBottom: 50 }}
-      keyExtractor={(item) => `${item.id}`}
-      scrollEnabled={false}
-      sections={DATA}
-      renderItem={renderItem}
-      ItemSeparatorComponent={() => (
-        <View
-          style={{
-            marginHorizontal: 16,
-            height: 1,
-            backgroundColor: colors.light,
-          }}
-        />
-      )}
-      SectionSeparatorComponent={() => (
-        <View style={{ height: 2, backgroundColor: colors.light }} />
-      )}
-      renderSectionHeader={({ section: { title } }) => (
-        <Text style={styles.sectionHeader}>{title}</Text>
-      )}
-      style={{ backgroundColor: colors.light }}
-    />
+    <ScrollView>
+      <SectionList
+        contentContainerStyle={{ paddingBottom: 50 }}
+        keyExtractor={(item) => `${item.id}`}
+        scrollEnabled={false}
+        sections={DATA}
+        renderItem={renderItem}
+        ItemSeparatorComponent={() => (
+          <View
+            style={{
+              marginHorizontal: 16,
+              height: 1,
+              backgroundColor: colors.light,
+            }}
+          />
+        )}
+        SectionSeparatorComponent={() => (
+          <View style={{ height: 2, backgroundColor: colors.light }} />
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.sectionHeader}>{title}</Text>
+        )}
+        style={{ backgroundColor: colors.light }}
+      />
+    </ScrollView>
   );
 }
 

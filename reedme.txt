@@ -57,3 +57,98 @@ const reverseGeocode = async (latitude, longitude) => {
     return null;
   }
 };
+
+
+
+
+
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+{/* <View style={styles.stickySegments}>
+        <View style={styles.segmentsShadow}>
+          <ScrollView
+            ref={scrollRef}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.segmentScrollview}
+          >
+            {DATA.map((item, index) => (
+              <TouchableOpacity
+                ref={(ref) => (itemsRef.current[index] = ref)}
+                key={index}
+                style={
+                  activeIndex === index
+                    ? styles.segmentButtonActive
+                    : styles.segmentButton
+                }
+                onPress={() => selectCategory(index)}
+              >
+                <Text
+                  style={
+                    activeIndex === index
+                      ? styles.segmentTextActive
+                      : styles.segmentText
+                  }
+                >
+                  {item.title}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      </View> */}
+
+
+      stickySegments: {
+    position: "absolute",
+    height: 50,
+    left: 0,
+    right: 0,
+    top: 100,
+    backgroundColor: "#fff",
+    overflow: "hidden",
+    paddingBottom: 4,
+  },
+  segmentsShadow: {
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+    width: "100%",
+    height: "100%",
+  },
+  segmentButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    borderRadius: 50,
+  },
+  segmentText: {
+    color: colors.medium,
+    fontSize: 16,
+  },
+  segmentButtonActive: {
+    backgroundColor: colors.secondary,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    borderRadius: 50,
+  },
+  segmentTextActive: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  segmentScrollview: {
+    paddingHorizontal: 16,
+    alignItems: "center",
+    gap: 20,
+    paddingBottom: 4,
+  },

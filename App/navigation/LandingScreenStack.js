@@ -9,6 +9,9 @@ import DichScreen from "../Screens/DichScreen";
 import AppText from "../Components/AppText";
 import colors from "../styles/colors";
 import BasketScreen from "../Screens/BasketScreen";
+import MenuScreen from "../Screens/MenuScreen";
+import RewardsScreen from "../Screens/RewardsScreen";
+import SpecialOffersScreen from "../Screens/SpecialOffersScreen";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +32,21 @@ export default function LandingScreenStack() {
         name="SetLocation"
         component={SetLocationScreen}
         options={{ title: "set your location" }}
+      />
+      <Stack.Screen
+        name="menuScreen"
+        component={MenuScreen}
+        options={{ title: "Menu" }}
+      />
+      <Stack.Screen
+        name="rewardsScreen"
+        component={RewardsScreen}
+        options={{ title: "Rewards" }}
+      />
+      <Stack.Screen
+        name="specialOffersScreen"
+        component={SpecialOffersScreen}
+        options={{ title: "Special Offers" }}
       />
       <Stack.Screen
         name="RestorantScreen"

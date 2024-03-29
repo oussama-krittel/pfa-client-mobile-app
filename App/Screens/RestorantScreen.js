@@ -3,32 +3,171 @@ import {
   View,
   Text,
   Image,
-  ScrollView,
   TouchableOpacity,
+  Linking,
 } from "react-native";
-import Animated, {
+import {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import React, { useEffect, useRef, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { basketCleared } from "../context/basket";
-
 import colors from "../styles/colors";
 import { hexToRgb } from "../styles/hexToRgb";
 import store from "../context/store";
 import Screen from "../Components/Screen";
 import ParallaxScrollView from "../Components/ParallaxScrollView";
-import Menu from "../Components/Menu";
 import AppText from "./../Components/AppText";
+
+const restaurantInfo = {
+  name: "Delicious Bites",
+  rating: 4.5,
+  likes: 1000,
+  instagram: "deliciousbites",
+  description:
+    "A cozy restaurant serving delicious food from around the world.",
+  phoneNumber: "1234567890",
+  email: "info@deliciousbites.com",
+};
+
+const VerticalMenu = ({ navigation }) => {
+  const handlePhonePress = () => {
+    Linking.openURL(`tel:${restaurantInfo.phoneNumber}`);
+  };
+
+  const handleEmailPress = () => {
+    Linking.openURL(`mailto:${restaurantInfo.email}`);
+  };
+
+  const handleInstagramPress = () => {
+    Linking.openURL(`https://www.instagram.com/${restaurantInfo.instagram}`);
+  };
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={{ margin: 4 }}>
+        <AppText style={styles.appText}>Info</AppText>
+      </View>
+      <View style={{ padding: 10 }}>
+        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 5 }}>
+          {restaurantInfo.name}
+        </Text>
+        <Text style={{ fontSize: 16, marginBottom: 5 }}>
+          Rating: {restaurantInfo.rating}
+        </Text>
+        <Text style={{ fontSize: 16, marginBottom: 5 }}>
+          Likes: {restaurantInfo.likes}
+        </Text>
+        <Text style={{ fontSize: 16, marginBottom: 5 }}>
+          Instagram: {restaurantInfo.instagram}
+        </Text>
+        <Text style={{ fontSize: 16, marginBottom: 5 }}>
+          Description: {restaurantInfo.description}
+        </Text>
+      </View>
+      <View style={{ margin: 4 }}>
+        <AppText style={styles.appText}>Make an Order</AppText>
+      </View>
+      <View style={styles.menuContainer}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("menuScreen")}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="restaurant-outline" size={24} color="black" />
+            <AppText style={styles.menuItemText}>Menu</AppText>
+          </View>
+          <Ionicons name="chevron-forward-outline" size={24} color="black" />
+        </TouchableOpacity>
+        <View style={styles.separator}></View>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("rewardsScreen")}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="gift-outline" size={24} color="black" />
+            <AppText style={styles.menuItemText}>Rewards</AppText>
+          </View>
+          <Ionicons name="chevron-forward-outline" size={24} color="black" />
+        </TouchableOpacity>
+        <View style={styles.separator}></View>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("specialOffersScreen")}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="fast-food-outline" size={24} color="black" />
+            <AppText style={styles.menuItemText}>Special Offers</AppText>
+          </View>
+          <Ionicons name="chevron-forward-outline" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+      <View style={{ margin: 4 }}>
+        <AppText style={styles.appText}>leave a Feedback</AppText>
+      </View>
+      <View style={styles.menuContainer}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("menuScreen")}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons name="file-tray-full-outline" size={24} color="black" />
+            <AppText style={styles.menuItemText}>Feedback</AppText>
+          </View>
+          <Ionicons name="chevron-forward-outline" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          height: 150,
+          marginHorizontal: 10,
+          marginTop: 10,
+        }}
+      >
+        <AppText
+          style={{
+            fontWeight: "bold",
+            fontSize: 20,
+            color: "rgba(" + hexToRgb(colors.secondary) + ", 0.8)",
+            marginBottom:30,
+          }}
+        >
+          contact us
+        </AppText>
+        <View
+          style={{
+            width: "100%",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity onPress={handlePhonePress}>
+            <Ionicons name="call-outline" size={30} color={colors.medium} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleEmailPress}>
+            <Ionicons name="mail-outline" size={30} color={colors.medium} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleInstagramPress}>
+            <Ionicons name="logo-instagram" size={30} color={colors.medium} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 export default function RestorantScreen({ route, navigation }) {
   const dispatch = useDispatch();
   const { totalPrice, selectedItemsCount } = useSelector(
     (state) => state.basket
   );
-
   store.subscribe(() => {
     console.log("store changed");
   });
@@ -36,10 +175,6 @@ export default function RestorantScreen({ route, navigation }) {
   useEffect(() => {
     dispatch(basketCleared());
   }, []);
-
-  const scrollRef = useRef(null);
-  const itemsRef = useRef([]);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   const opacity = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => ({
@@ -53,14 +188,6 @@ export default function RestorantScreen({ route, navigation }) {
     } else {
       opacity.value = withTiming(0);
     }
-  };
-
-  const selectCategory = (index) => {
-    setActiveIndex(index);
-    const selected = itemsRef.current[index];
-    selected.measure((x) => {
-      scrollRef.current?.scrollTo({ x: x - 16, y: 0, animated: true });
-    });
   };
 
   return (
@@ -116,47 +243,10 @@ export default function RestorantScreen({ route, navigation }) {
           </View>
         )}
       >
-        <View style={styles.detailsContainer}>
-          <Menu DATA={DATA} navigation={navigation} />
-        </View>
+        <VerticalMenu navigation={navigation} />
       </ParallaxScrollView>
 
-      {/* stekySegment */}
-      <Animated.View style={[styles.stickySegments, animatedStyles]}>
-        <View style={styles.segmentsShadow}>
-          <ScrollView
-            ref={scrollRef}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.segmentScrollview}
-          >
-            {DATA.map((item, index) => (
-              <TouchableOpacity
-                ref={(ref) => (itemsRef.current[index] = ref)}
-                key={index}
-                style={
-                  activeIndex === index
-                    ? styles.segmentButtonActive
-                    : styles.segmentButton
-                }
-                onPress={() => selectCategory(index)}
-              >
-                <AppText
-                  style={
-                    activeIndex === index
-                      ? styles.segmentTextActive
-                      : styles.segmentText
-                  }
-                >
-                  {item.title}
-                </AppText>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
-      </Animated.View>
-
-      {/* baxket */}
+      {/* basket */}
       {selectedItemsCount > 0 && (
         <View style={styles.footer}>
           <Screen>
@@ -183,6 +273,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  appText: {
+    margin: 7,
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "rgba(" + hexToRgb(colors.secondary) + ", 0.8)",
   },
   stickySection: {
     backgroundColor: "#fff",
@@ -292,113 +388,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
+  menuContainer: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
+  },
+  menuItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 15,
+  },
+  menuItemText: {
+    marginLeft: 10,
+    fontSize: 18,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "lightgray",
+    marginVertical: 5,
+  },
 });
-
-//*****************************************   temporary data   ***********************************
-
-const DATA = [
-  {
-    title: "Starters",
-    data: [
-      {
-        id: 1,
-        name: "Garlic Bread",
-        info: "Toasted bread with garlic",
-        price: 5.99,
-        img: require("../../assets/image1.png"),
-      },
-      {
-        id: 2,
-        name: "Caesar Salad",
-        info: "Fresh salad with Caesar dressing",
-        price: 8.99,
-        img: require("../../assets/image2.jpeg"),
-      },
-      // Add more starter items here if needed
-      {
-        id: 3,
-        name: "Bruschetta",
-        info: "Toasted bread topped with tomatoes, basil, and olive oil",
-        price: 6.99,
-        img: require("../../assets/image3.jpeg"), // Reusing the third image
-      },
-      {
-        id: 4,
-        name: "Mozzarella Sticks",
-        info: "Fried mozzarella cheese sticks with marinara sauce",
-        price: 7.99,
-        img: require("../../assets/image4.jpeg"), // Reusing the fourth image
-      },
-    ],
-  },
-
-  {
-    title: "Main Courses",
-    data: [
-      {
-        id: 5,
-        name: "Spaghetti Bolognese",
-        info: "Classic Italian pasta dish",
-        price: 12.99,
-        img: require("../../assets/image3.jpeg"),
-      },
-      {
-        id: 6,
-        name: "Grilled Salmon",
-        info: "Freshly grilled salmon fillet",
-        price: 15.99,
-        img: require("../../assets/image4.jpeg"),
-      },
-      // Add more main course items here if needed
-      {
-        id: 7,
-        name: "Chicken Parmesan",
-        info: "Breaded chicken topped with marinara sauce and melted cheese",
-        price: 14.99,
-        img: require("../../assets/image1.png"), // Reusing the first image
-      },
-      {
-        id: 8,
-        name: "Vegetable Stir Fry",
-        info: "Assorted vegetables stir-fried in a savory sauce",
-        price: 11.99,
-        img: require("../../assets/image2.jpeg"), // Reusing the second image
-      },
-    ],
-  },
-  // Add more sections if needed
-  {
-    title: "Desserts",
-    data: [
-      {
-        id: 9,
-        name: "Chocolate Cake",
-        info: "Rich chocolate cake with icing",
-        price: 7.99,
-        img: require("../../assets/image1.png"),
-      },
-      {
-        id: 10,
-        name: "Tiramisu",
-        info: "Classic Italian dessert with coffee flavor",
-        price: 9.99,
-        img: require("../../assets/image2.jpeg"),
-      },
-      // Add more dessert items here if needed
-      {
-        id: 11,
-        name: "Cheesecake",
-        info: "Creamy cheesecake with a graham cracker crust",
-        price: 8.99,
-        img: require("../../assets/image3.jpeg"), // Reusing the third image
-      },
-      {
-        id: 12,
-        name: "Fruit Salad",
-        info: "Fresh fruit salad with honey-lime dressing",
-        price: 6.99,
-        img: require("../../assets/image4.jpeg"), // Reusing the fourth image
-      },
-    ],
-  },
-];
