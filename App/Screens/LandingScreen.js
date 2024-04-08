@@ -11,11 +11,78 @@ export default function LandingScreen({ navigation }) {
   const bottomSheetRef = useRef(null);
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
   const data = [
-    { id: 1, img: require("../../assets/image1.png"), title: "Card 1" },
-    { id: 2, img: require("../../assets/image2.jpeg"), title: "Card 2" },
-    { id: 3, img: require("../../assets/image3.jpeg"), title: "Card 3" },
-    { id: 4, img: require("../../assets/image4.jpeg"), title: "Card 4" },
-    { id: 5, img: require("../../assets/images.jpeg"), title: "Card 5" },
+    {
+      id: 1,
+      name: "Delizioso Italiano",
+      location: { latitude: 31.7917, longitude: -7.0926 },
+      coverImage: require("../../assets/image1.png"),
+      logo: require("../../assets/logo2.png"),
+      cuisine: "Italian",
+      rating: 4.5,
+    },
+    {
+      id: 2,
+      name: "Taco Paradise",
+      location: { latitude: 33.9716, longitude: -6.8498 }, // Location in Morocco
+      coverImage: require("../../assets/image3.jpeg"),
+      logo: require("../../assets/logo.jpeg"),
+      cuisine: "Mexican",
+      rating: 4.2,
+    },
+    {
+      id: 3,
+      name: "Sushi Haven",
+      location: { latitude: 30.4278, longitude: -9.5981 }, // Location in Morocco
+      coverImage: require("../../assets/image4.jpeg"),
+      logo: require("../../assets/logo1.jpeg"),
+      cuisine: "Japanese",
+      rating: 4.8,
+    },
+    {
+      id: 4,
+      name: "Burger Joint",
+      location: { latitude: 34.0209, longitude: -6.8411 }, // Location in Morocco
+      coverImage: require("../../assets/images.jpeg"),
+      logo: require("../../assets/logo3.png"),
+      cuisine: "American",
+      rating: 4.0,
+    },
+    {
+      id: 5,
+      name: "Curry House",
+      location: { latitude: 31.6333, longitude: -8.0 }, // Location in Morocco
+      coverImage: require("../../assets/image2.jpeg"),
+      logo: require("../../assets/logo2.png"),
+      cuisine: "Indian",
+      rating: 4.3,
+    },
+    {
+      id: 6,
+      name: "Seafood Delight",
+      location: { latitude: 32.3106, longitude: -9.2362 }, // Location in Morocco
+      coverImage: require("../../assets/image4.jpeg"),
+      logo: require("../../assets/logo2.png"),
+      cuisine: "Seafood",
+      rating: 4.7,
+    },
+    {
+      id: 7,
+      name: "Pho Noodle House",
+      location: { latitude: 31.6356, longitude: -8.0083 }, // Location in Morocco
+      coverImage: require("../../assets/image3.jpeg"),
+      logo: require("../../assets/logo2.png"),
+      cuisine: "Vietnamese",
+      rating: 4.3,
+    },
+    {
+      id: 166,
+      name: "Pizza Palace",
+      location: { latitude: 32.2995, longitude: -9.2371 },
+      coverImage: require("../../assets/image4.jpeg"),
+      logo: require("../../assets/logo2.png"),
+      cuisine: "Pizza",
+      rating: 4.6,
+    },
   ];
 
   const openBottomSheet = () => {
@@ -27,25 +94,6 @@ export default function LandingScreen({ navigation }) {
     bottomSheetRef.current?.close();
     setBottomSheetVisible(false);
   };
-
-  // const [scrollDirection, setScrollDirection] = useState("down");
-  // const [offset, setOffset] = useState(0);
-
-  // const handleScroll = (event) => {
-  //   const currentOffset = event.nativeEvent.contentOffset.y;
-  //   const threshold = 30;
-  //   const direction =
-  //     currentOffset > offset + threshold
-  //       ? "down"
-  //       : currentOffset < offset - threshold
-  //       ? "up"
-  //       : scrollDirection;
-  //   setScrollDirection(direction);
-  //   setOffset(currentOffset);
-  // };
-  // useEffect(() => {
-  //   console.log("Scroll direction:", scrollDirection);
-  // }, [scrollDirection]);
 
   return (
     <View style={styles.container}>

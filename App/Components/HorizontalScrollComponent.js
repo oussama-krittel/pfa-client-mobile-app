@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import Card from "./Card";
+import colors from "../styles/colors";
 
 export default function HorizontalScrollComponent({
   title,
@@ -15,7 +16,9 @@ export default function HorizontalScrollComponent({
           <Card
             key={index}
             card={card}
-            onPress={() => navigation.navigate("RestorantScreen",{id:card.id})}
+            onPress={() =>
+              navigation.navigate("RestorantScreen", { id: card.id })
+            }
           />
         ))}
       </ScrollView>
@@ -29,8 +32,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    margin: 20,
+    marginVertical: 12,
+    color: colors.secondary,
+    textShadowColor: "rgba(0, 0, 0, 0.25)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    letterSpacing: 0.5,
   },
 });

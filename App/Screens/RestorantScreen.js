@@ -12,6 +12,7 @@ import {
   withTiming,
 } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,13 +26,17 @@ import AppText from "./../Components/AppText";
 
 const restaurantInfo = {
   name: "Delicious Bites",
+  coverImage: require("../../assets/image3.jpeg"),
+  logo: require("../../assets/logo.jpeg"),
   rating: 4.5,
   likes: 1000,
-  instagram: "deliciousbites",
+  cuisine: "italien,morrocan",
   description:
     "A cozy restaurant serving delicious food from around the world.",
+  instagram: "_ilal_",
   phoneNumber: "1234567890",
   email: "info@deliciousbites.com",
+  location: "tilila agadir",
 };
 
 const VerticalMenu = ({ navigation }) => {
@@ -52,20 +57,27 @@ const VerticalMenu = ({ navigation }) => {
         <AppText style={styles.appText}>Info</AppText>
       </View>
       <View style={{ padding: 10 }}>
-        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 5 }}>
+        <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 5 }}>
           {restaurantInfo.name}
         </Text>
-        <Text style={{ fontSize: 16, marginBottom: 5 }}>
-          Rating: {restaurantInfo.rating}
+        <Text style={{ fontSize: 15, marginBottom: 5, color: "grey" }}>
+          {restaurantInfo.description}
+        </Text>
+        <Text style={{ fontSize: 15, marginBottom: 5 }}>
+          cuisine: {restaurantInfo.cuisine}
         </Text>
         <Text style={{ fontSize: 16, marginBottom: 5 }}>
-          Likes: {restaurantInfo.likes}
+          <FontAwesome name="star" size={19} color="gold" />{" "}
+          {restaurantInfo.rating}
         </Text>
         <Text style={{ fontSize: 16, marginBottom: 5 }}>
-          Instagram: {restaurantInfo.instagram}
+          <FontAwesome name="heart" size={18} color="red" />{" "}
+          {restaurantInfo.likes}
         </Text>
-        <Text style={{ fontSize: 16, marginBottom: 5 }}>
-          Description: {restaurantInfo.description}
+        <Text style={{ fontSize: 16, marginBottom: 5, color: "grey" }}>
+          {" "}
+          <FontAwesome name="map-marker" size={19} color="grey" />{" "}
+          {restaurantInfo.location}
         </Text>
       </View>
       <View style={{ margin: 4 }}>
