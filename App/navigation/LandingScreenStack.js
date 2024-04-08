@@ -12,6 +12,7 @@ import BasketScreen from "../Screens/BasketScreen";
 import MenuScreen from "../Screens/MenuScreen";
 import RewardsScreen from "../Screens/RewardsScreen";
 import SpecialOffersScreen from "../Screens/SpecialOffersScreen";
+import FeedBackScreen from "../Screens/FeedBackScreen";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,11 @@ export default function LandingScreenStack() {
         name="rewardsScreen"
         component={RewardsScreen}
         options={{ title: "Rewards" }}
+      />
+      <Stack.Screen
+        name="feedBackScreen"
+        component={FeedBackScreen}
+        options={{ title: "Feedback" }}
       />
       <Stack.Screen
         name="specialOffersScreen"

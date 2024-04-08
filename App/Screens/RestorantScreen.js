@@ -111,7 +111,7 @@ const VerticalMenu = ({ navigation }) => {
       <View style={styles.menuContainer}>
         <TouchableOpacity
           style={styles.menuItem}
-          onPress={() => navigation.navigate("menuScreen")}
+          onPress={() => navigation.navigate("feedBackScreen")}
         >
           <View style={{ flexDirection: "row" }}>
             <Ionicons name="file-tray-full-outline" size={24} color="black" />
@@ -135,7 +135,7 @@ const VerticalMenu = ({ navigation }) => {
             fontWeight: "bold",
             fontSize: 20,
             color: "rgba(" + hexToRgb(colors.secondary) + ", 0.8)",
-            marginBottom:30,
+            marginBottom: 30,
           }}
         >
           contact us

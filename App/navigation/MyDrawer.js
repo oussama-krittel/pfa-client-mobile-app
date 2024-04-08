@@ -3,7 +3,6 @@ import { Text, View } from "react-native";
 import { DrawerItem, createDrawerNavigator } from "@react-navigation/drawer";
 import { DrawerItemList } from "@react-navigation/drawer";
 import DrawerHeader from "../Components/DrawerHeader";
-import Screen from "../Components/Screen";
 import { Ionicons } from "@expo/vector-icons";
 
 import MapScreenStack from "./MapScreenStack";
@@ -11,6 +10,8 @@ import colors from "../styles/colors";
 import LandingScreenStack from "./LandingScreenStack";
 import SearchScreen from "../Screens/SearchScreen";
 import MyTabs from "./TopTabs";
+import ProfileScreen from "../Screens/profileScreen";
+import SecurityScreen from "../Screens/SecurityScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -95,22 +96,26 @@ export default function MyDrawer() {
 
       <Drawer.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileScreen}
         options={{
-          drawerLabel: "Profile",
+          drawerLabel: "Profile details",
+          headerShown: false,
           drawerIcon: ({ size, color }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           ),
         }}
       />
+      <Drawer.Screen
+        name="Security"
+        component={SecurityScreen}
+        options={{
+          drawerLabel: "Password & Security",
+          headerShown: false,
+          drawerIcon: ({ size, color }) => (
+            <Ionicons name="lock-closed-outline" size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
-  );
-}
-
-function Profile() {
-  return (
-    <Screen style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Profile Screen</Text>
-    </Screen>
   );
 }
