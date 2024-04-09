@@ -7,7 +7,9 @@ export default function HorizontalScrollComponent({
   title,
   cards,
   navigation,
+  distanceData,
 }) {
+  console.log(distanceData && distanceData);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
@@ -16,6 +18,7 @@ export default function HorizontalScrollComponent({
           <Card
             key={index}
             card={card}
+            distance={distanceData && distanceData[index]}
             onPress={() =>
               navigation.navigate("RestorantScreen", { id: card.id })
             }

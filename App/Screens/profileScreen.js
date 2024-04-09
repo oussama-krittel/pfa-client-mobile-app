@@ -9,6 +9,7 @@ import {
   Platform,
   Alert,
   Linking,
+  ScrollView,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -116,7 +117,7 @@ export default function ProfileScreen({ navigation }) {
   };
 
   return (
-    <>
+    <ScrollView>
       <View style={styles.Topheader}>
         <TouchableOpacity
           style={styles.backButton}
@@ -247,7 +248,7 @@ export default function ProfileScreen({ navigation }) {
           </Picker>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 }
 

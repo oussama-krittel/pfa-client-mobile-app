@@ -23,23 +23,12 @@ import store from "../context/store";
 import Screen from "../Components/Screen";
 import ParallaxScrollView from "../Components/ParallaxScrollView";
 import AppText from "./../Components/AppText";
+import restaurantData from "../../assets/data/restaurantData";
 
-const restaurantInfo = {
-  name: "Delicious Bites",
-  coverImage: require("../../assets/image3.jpeg"),
-  logo: require("../../assets/logo.jpeg"),
-  rating: 4.5,
-  likes: 1000,
-  cuisine: "italien,morrocan",
-  description:
-    "A cozy restaurant serving delicious food from around the world.",
-  instagram: "_ilal_",
-  phoneNumber: "1234567890",
-  email: "info@deliciousbites.com",
-  location: "tilila agadir",
-};
-
-const VerticalMenu = ({ navigation }) => {
+const VerticalMenu = ({ navigation, restaurantInfo }) => {
+  if (!restaurantInfo) {
+    return <Text>Restaurant information not found.</Text>;
+  }
   const handlePhonePress = () => {
     Linking.openURL(`tel:${restaurantInfo.phoneNumber}`);
   };
@@ -77,7 +66,8 @@ const VerticalMenu = ({ navigation }) => {
         <Text style={{ fontSize: 16, marginBottom: 5, color: "grey" }}>
           {" "}
           <FontAwesome name="map-marker" size={19} color="grey" />{" "}
-          {restaurantInfo.location}
+          {/* {restaurantInfo.location} */}
+          hay tilila agadir
         </Text>
       </View>
       <View style={{ margin: 4 }}>
@@ -86,7 +76,11 @@ const VerticalMenu = ({ navigation }) => {
       <View style={styles.menuContainer}>
         <TouchableOpacity
           style={styles.menuItem}
-          onPress={() => navigation.navigate("menuScreen")}
+          onPress={() =>
+            navigation.navigate("menuScreen", {
+              restaurantId: restaurantInfo.id,
+            })
+          }
         >
           <View style={{ flexDirection: "row" }}>
             <Ionicons name="restaurant-outline" size={24} color="black" />
@@ -97,7 +91,11 @@ const VerticalMenu = ({ navigation }) => {
         <View style={styles.separator}></View>
         <TouchableOpacity
           style={styles.menuItem}
-          onPress={() => navigation.navigate("rewardsScreen")}
+          onPress={() =>
+            navigation.navigate("rewardsScreen", {
+              restaurantId: restaurantInfo.id,
+            })
+          }
         >
           <View style={{ flexDirection: "row" }}>
             <Ionicons name="gift-outline" size={24} color="black" />
@@ -108,7 +106,11 @@ const VerticalMenu = ({ navigation }) => {
         <View style={styles.separator}></View>
         <TouchableOpacity
           style={styles.menuItem}
-          onPress={() => navigation.navigate("specialOffersScreen")}
+          onPress={() =>
+            navigation.navigate("specialOffersScreen", {
+              restaurantId: restaurantInfo.id,
+            })
+          }
         >
           <View style={{ flexDirection: "row" }}>
             <Ionicons name="fast-food-outline" size={24} color="black" />
@@ -123,7 +125,11 @@ const VerticalMenu = ({ navigation }) => {
       <View style={styles.menuContainer}>
         <TouchableOpacity
           style={styles.menuItem}
-          onPress={() => navigation.navigate("feedBackScreen")}
+          onPress={() =>
+            navigation.navigate("feedBackScreen", {
+              restaurantId: restaurantInfo.id,
+            })
+          }
         >
           <View style={{ flexDirection: "row" }}>
             <Ionicons name="file-tray-full-outline" size={24} color="black" />
@@ -184,6 +190,10 @@ export default function RestorantScreen({ route, navigation }) {
     console.log("store changed");
   });
 
+  const restaurantInfo = restaurantData.find(
+    (restaurant) => restaurant.id === route.params.id
+  );
+
   useEffect(() => {
     dispatch(basketCleared());
   }, []);
@@ -212,7 +222,7 @@ export default function RestorantScreen({ route, navigation }) {
         stickyHeaderHeight={100}
         renderBackground={() => (
           <Image
-            source={require("../../assets/image2.jpeg")}
+            source={restaurantInfo.coverImage}
             style={{ height: 300, width: "100%" }}
           />
         )}
@@ -226,7 +236,7 @@ export default function RestorantScreen({ route, navigation }) {
             }}
           >
             <Image
-              source={require("../../assets/logo2.png")}
+              source={restaurantInfo.logo}
               style={{
                 height: 100,
                 width: 100,
@@ -242,20 +252,28 @@ export default function RestorantScreen({ route, navigation }) {
                 paddingLeft: 8,
               }}
             >
-              <AppText style={{ color: "white" }}>B13 Restaurant</AppText>
-              <AppText style={{ color: "white" }}>1033 pt</AppText>
+              <AppText style={{ color: "white" }}>
+                {restaurantInfo.name}
+              </AppText>
+              <AppText style={{ color: "white" }}>
+                {restaurantInfo.points ? restaurantInfo.points : 0} pt
+              </AppText>
             </View>
           </View>
         )}
         contentBackgroundColor={colors.light}
         renderStickyHeader={() => (
           <View key="sticky-header" style={[styles.stickySection]}>
-            <AppText style={styles.stickySectionText}>B13 Restaurant</AppText>
-            <AppText style={styles.stickySectionText2}>1033 pt</AppText>
+            <AppText style={styles.stickySectionText}>
+              {restaurantInfo.name}
+            </AppText>
+            <AppText style={styles.stickySectionText2}>
+              {restaurantInfo.points ? restaurantInfo.points : 0} pt
+            </AppText>
           </View>
         )}
       >
-        <VerticalMenu navigation={navigation} />
+        <VerticalMenu navigation={navigation} restaurantInfo={restaurantInfo} />
       </ParallaxScrollView>
 
       {/* basket */}

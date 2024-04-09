@@ -25,9 +25,11 @@ export default function RecentlyUsedScreen({ navigation }) {
           >
             <Image source={item.coverImage} style={styles.coverImage} />
             <View style={styles.detailsContainer}>
-              <Image source={item.logo} style={styles.logo} />
               <View style={styles.textContainer}>
-                <Text style={styles.name}>{item.name}</Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Image source={item.logo} style={styles.logo} />
+                  <Text style={styles.name}>{item.name}</Text>
+                </View>
                 <Text style={styles.cuisine}>{item.cuisine}</Text>
                 <Text style={styles.rating}>Rating: {item.rating}</Text>
                 <Text style={styles.priceRange}>
@@ -79,8 +81,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 33,
+    height: 33,
+    margin: 7,
+    marginBottom: 3,
+    marginLeft: 0,
     borderRadius: 25,
   },
   textContainer: {

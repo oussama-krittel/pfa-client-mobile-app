@@ -9,7 +9,7 @@ import {
 import AppText from "./AppText";
 import { FontAwesome } from "@expo/vector-icons"; // Import FontAwesome
 
-function Card({ card, onPress }) {
+function Card({ card, onPress, distance }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.card}>
@@ -26,7 +26,7 @@ function Card({ card, onPress }) {
                 <FontAwesome
                   name="star"
                   size={18}
-                  color="white"
+                  color="gold"
                   style={styles.starIcon}
                 />
                 <AppText style={styles.rating}>{card.rating}</AppText>
@@ -36,6 +36,11 @@ function Card({ card, onPress }) {
             </View>
           </View>
         </ImageBackground>
+        {distance && (
+          <View style={styles.distanceContainer}>
+            <AppText style={styles.distanceText}>{distance} km</AppText>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -90,19 +95,36 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     fontWeight: "bold",
-    textShadowColor: "rgba(0, 0, 0, 0.75)", // Add shadow to name
+    textShadowColor: "rgba(0, 0, 0, 0.75)", 
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
   },
   cuisine: {
     color: "white",
     fontSize: 14,
-    textShadowColor: "rgba(0, 0, 0, 0.75)", // Add shadow to cuisine
+    textShadowColor: "rgba(0, 0, 0, 0.75)", 
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
   },
   rating: {
     color: "white",
     fontSize: 14,
+    textShadowColor: "rgba(0, 0, 0, 0.75)", 
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
+  },
+  distanceContainer: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+  },
+  distanceText: {
+    color: "gold",
+    fontSize: 12,
+    fontWeight: "bold",
   },
 });

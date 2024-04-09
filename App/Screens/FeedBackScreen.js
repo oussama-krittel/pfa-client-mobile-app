@@ -10,7 +10,10 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import colors from "../styles/colors";
 
-function FeedBackScreen({ navigation }) {
+function FeedBackScreen({ navigation, route }) {
+  // console.log(route.params.restaurantId);
+  //using this id post the feedBack to the backend
+
   const [feedbackText, setFeedbackText] = useState("");
   const [rating, setRating] = useState(0);
 
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    padding:25,
+    padding: 25,
     paddingHorizontal: 20,
     backgroundColor: "#f8f8f8",
   },
@@ -91,8 +94,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     minHeight: 160,
     borderRadius: 15,
-    textAlignVertical: "top", // For Android
-    textAlign: "left", // For iOS
+    textAlignVertical: "top", //for Android
+    textAlign: "left", //for iOS
   },
   starContainer: {
     flexDirection: "row",

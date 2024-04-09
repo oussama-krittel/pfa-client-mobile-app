@@ -1,18 +1,18 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 
+import colors from "../styles/colors";
 import LandingScreen from "../Screens/LandingScreen";
 import SetLocationScreen from "../Screens/SetLocationScreen";
 import RestorantScreen from "../Screens/RestorantScreen";
 import DichScreen from "../Screens/DichScreen";
-import AppText from "../Components/AppText";
-import colors from "../styles/colors";
 import BasketScreen from "../Screens/BasketScreen";
 import MenuScreen from "../Screens/MenuScreen";
 import RewardsScreen from "../Screens/RewardsScreen";
 import SpecialOffersScreen from "../Screens/SpecialOffersScreen";
 import FeedBackScreen from "../Screens/FeedBackScreen";
+import TutorialScreen from "../Screens/TutorialScreen";
 
 const Stack = createStackNavigator();
 
@@ -107,25 +107,9 @@ export default function LandingScreenStack() {
       />
       <Stack.Screen
         name="tutorielScreens"
-        component={TutorielScreen}
-        options={{ title: "Basket" }}
+        component={TutorialScreen}
+        options={{ title: "Tutorial" }}
       />
     </Stack.Navigator>
   );
 }
-
-function TutorielScreen() {
-  return (
-    <View style={styles.container}>
-      <AppText>tutorial</AppText>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

@@ -52,7 +52,7 @@ const SecurityScreen = ({ navigation }) => {
   };
 
   return (
-    <>
+    <ScrollView>
       <View style={styles.Topheader}>
         <TouchableOpacity
           style={styles.backButton}
@@ -130,7 +130,7 @@ const SecurityScreen = ({ navigation }) => {
           <Text style={styles.submitButtonText}>Submit</Text>
         </TouchableOpacity>
       </View>
-    </>
+    </ScrollView>
   );
 };
 
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     margin: 8,
     position: "absolute",
     right: 10,
-    top:10,
+    top: 10,
   },
   error: {
     color: "red",

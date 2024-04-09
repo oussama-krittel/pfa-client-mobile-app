@@ -6,10 +6,13 @@ import Menu from "../Components/Menu";
 import { hexToRgb } from "../styles/hexToRgb";
 import colors from "../styles/colors";
 
-export default function RewardsScreen({ navigation }) {
+export default function RewardsScreen({ navigation, route }) {
   const { totalPrice, selectedItemsCount } = useSelector(
     (state) => state.basket
   );
+
+  // console.log(route.params.restaurantId);
+  //using this id fetch the menu from the backend instead
 
   const scrollRef = useRef(null);
   const itemsRef = useRef([]);

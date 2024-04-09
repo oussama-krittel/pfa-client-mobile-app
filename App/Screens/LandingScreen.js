@@ -2,88 +2,66 @@ import React, { useRef, useState, useEffect } from "react";
 import { View, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import colors from "../styles/colors";
 import BottomSheet from "@gorhom/bottom-sheet";
-
 import BottomSheetContent from "../Components/BottomSheetContent";
 import LandingScreenHeader from "../Components/LandingScreenHeader";
 import HorizontalScrollComponent from "../Components/HorizontalScrollComponent";
+import restaurantData from "../../assets/data/restaurantData";
+import { useSelector } from "react-redux";
+import store from "../context/store";
+
+const DATA_PER_LIST = 10;
+
+const randomRecommendations = (data) => {
+  const recommendations = [];
+  for (let i = 0; i < DATA_PER_LIST; i++) {
+    const randomIndex = Math.floor(Math.random() * data.length);
+    recommendations.push(data[randomIndex]);
+  }
+  return recommendations;
+};
+
+const getNearbyRestaurants = (data, userLocation) => {
+  return data
+    .map((restaurant) => ({
+      ...restaurant,
+      distance: parseFloat(
+        (calculateDistance(userLocation, restaurant.location) / 1000).toFixed(2)
+      ), // Convert to kilometers and round to 2 decimal places
+    }))
+    .sort((a, b) => a.distance - b.distance)
+    .slice(0, DATA_PER_LIST);
+};
+
+const calculateDistance = (location1, location2) => {
+  const lat1 = location1.latitude;
+  const lon1 = location1.longitude;
+  const lat2 = location2.latitude;
+  const lon2 = location2.longitude;
+
+  const R = 6371e3; // metres
+  const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
+  const φ2 = (lat2 * Math.PI) / 180;
+  const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+  const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const distance = R * c; // in metres
+  return distance;
+};
 
 export default function LandingScreen({ navigation }) {
   const bottomSheetRef = useRef(null);
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
-  const data = [
-    {
-      id: 1,
-      name: "Delizioso Italiano",
-      location: { latitude: 31.7917, longitude: -7.0926 },
-      coverImage: require("../../assets/image1.png"),
-      logo: require("../../assets/logo2.png"),
-      cuisine: "Italian",
-      rating: 4.5,
-    },
-    {
-      id: 2,
-      name: "Taco Paradise",
-      location: { latitude: 33.9716, longitude: -6.8498 }, // Location in Morocco
-      coverImage: require("../../assets/image3.jpeg"),
-      logo: require("../../assets/logo.jpeg"),
-      cuisine: "Mexican",
-      rating: 4.2,
-    },
-    {
-      id: 3,
-      name: "Sushi Haven",
-      location: { latitude: 30.4278, longitude: -9.5981 }, // Location in Morocco
-      coverImage: require("../../assets/image4.jpeg"),
-      logo: require("../../assets/logo1.jpeg"),
-      cuisine: "Japanese",
-      rating: 4.8,
-    },
-    {
-      id: 4,
-      name: "Burger Joint",
-      location: { latitude: 34.0209, longitude: -6.8411 }, // Location in Morocco
-      coverImage: require("../../assets/images.jpeg"),
-      logo: require("../../assets/logo3.png"),
-      cuisine: "American",
-      rating: 4.0,
-    },
-    {
-      id: 5,
-      name: "Curry House",
-      location: { latitude: 31.6333, longitude: -8.0 }, // Location in Morocco
-      coverImage: require("../../assets/image2.jpeg"),
-      logo: require("../../assets/logo2.png"),
-      cuisine: "Indian",
-      rating: 4.3,
-    },
-    {
-      id: 6,
-      name: "Seafood Delight",
-      location: { latitude: 32.3106, longitude: -9.2362 }, // Location in Morocco
-      coverImage: require("../../assets/image4.jpeg"),
-      logo: require("../../assets/logo2.png"),
-      cuisine: "Seafood",
-      rating: 4.7,
-    },
-    {
-      id: 7,
-      name: "Pho Noodle House",
-      location: { latitude: 31.6356, longitude: -8.0083 }, // Location in Morocco
-      coverImage: require("../../assets/image3.jpeg"),
-      logo: require("../../assets/logo2.png"),
-      cuisine: "Vietnamese",
-      rating: 4.3,
-    },
-    {
-      id: 166,
-      name: "Pizza Palace",
-      location: { latitude: 32.2995, longitude: -9.2371 },
-      coverImage: require("../../assets/image4.jpeg"),
-      logo: require("../../assets/logo2.png"),
-      cuisine: "Pizza",
-      rating: 4.6,
-    },
-  ];
+  const data = restaurantData;
+  const userLocation = useSelector((state) => state.location);
+
+  store.subscribe(() => {
+    console.log("store changed");
+  });
 
   const openBottomSheet = () => {
     bottomSheetRef.current?.expand();
@@ -111,25 +89,33 @@ export default function LandingScreen({ navigation }) {
       />
       <ScrollView style={{ flex: 1 }}>
         <HorizontalScrollComponent
-          title="Most popular"
-          cards={data}
+          title="Recommendations"
+          cards={randomRecommendations(data)}
           navigation={navigation}
         />
         <HorizontalScrollComponent
-          title="Most ratings"
-          cards={data}
+          title="Near You"
+          distanceData={getNearbyRestaurants(data, userLocation).map(
+            (restaurant) => restaurant.distance
+          )}
+          cards={getNearbyRestaurants(data, userLocation)}
+          navigation={navigation}
+        />
+
+        <HorizontalScrollComponent
+          title="Most Popular"
+          cards={data.slice(0, DATA_PER_LIST)}
           navigation={navigation}
         />
         <HorizontalScrollComponent
-          title="Near you"
-          cards={data}
+          title="Most Ratings"
+          cards={data
+            .slice()
+            .sort((a, b) => b.rating - a.rating)
+            .slice(0, DATA_PER_LIST)}
           navigation={navigation}
         />
-        <HorizontalScrollComponent
-          title="recomendations"
-          cards={data}
-          navigation={navigation}
-        />
+
         <TouchableOpacity
           style={[
             styles.overlay,
@@ -163,8 +149,5 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(0, 0, 0, 0.2)",
-  },
-  content: {
-    flex: 1,
   },
 });

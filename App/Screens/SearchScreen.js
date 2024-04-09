@@ -62,9 +62,11 @@ function SearchScreen({ navigation }) {
           >
             <Image source={item.coverImage} style={styles.coverImage} />
             <View style={styles.detailsContainer}>
-              <Image source={item.logo} style={styles.logo} />
               <View style={styles.textContainer}>
-                <Text style={styles.name}>{item.name}</Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Image source={item.logo} style={styles.logo} />
+                  <Text style={styles.name}>{item.name}</Text>
+                </View>
                 <Text style={styles.cuisine}>{item.cuisine}</Text>
                 <Text style={styles.rating}>Rating: {item.rating}</Text>
                 <Text style={styles.priceRange}>
@@ -78,7 +80,6 @@ function SearchScreen({ navigation }) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -87,11 +88,12 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: "gray",
+    borderColor: "#ddd", // Change border color
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
+    borderRadius: 8, // Increase border radius
+    paddingHorizontal: 15, // Increase horizontal padding
+    marginBottom: 20, // Increase bottom margin
+    fontSize: 16, // Increase font size
   },
   list: {
     flex: 1,
@@ -99,33 +101,38 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 20, // Increase bottom margin
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
+    borderColor: "#ddd", // Change border color
+    borderRadius: 10, // Increase border radius
+    padding: 15, // Increase padding
+    backgroundColor: "#f9f9f9", // Add background color
   },
   coverImage: {
     width: 100,
     height: 100,
-    marginRight: 10,
-    borderRadius: 5,
+    marginRight: 15, // Increase right margin
+    borderRadius: 10, // Increase border radius
   },
   detailsContainer: {
     flexDirection: "row",
     alignItems: "center",
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 33,
+    height: 33,
+    margin:7,
+    marginBottom:3,
+    marginLeft:0,
     borderRadius: 25,
   },
   textContainer: {
-    marginLeft: 10,
+    marginLeft: 15, // Increase left margin
   },
   name: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "#333", // Change text color
   },
   location: {
     fontSize: 14,

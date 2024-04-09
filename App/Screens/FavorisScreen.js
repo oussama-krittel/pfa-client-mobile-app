@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   StyleSheet,
@@ -6,12 +6,43 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  RefreshControl,
 } from "react-native";
-import restaurantData from "../../assets/data/restaurantData";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../styles/colors";
 
+import restaurantData from "../../assets/data/restaurantData";
+
 export default function FavorisScreen({ navigation }) {
+  const [favorites, setFavorites] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Function to handle favoriting an item
+  const toggleFavorite = (id) => {
+    if (favorites.includes(id)) {
+      // Item already favorited, so remove it from favorites
+      setFavorites(favorites.filter((favId) => favId !== id));
+    } else {
+      // Item not favorited, so add it to favorites
+      setFavorites([...favorites, id]);
+    }
+  };
+
+  // Function to check if an item is favorited
+  const isFavorite = (id) => {
+    return favorites.includes(id);
+  };
+
+  // Function to handle pull down to refresh
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    // Perform data fetching or any other actions
+    // Once done, set refreshing to false to stop the refreshing indicator
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000); // Simulating data fetching delay
+  }, []);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -27,9 +58,11 @@ export default function FavorisScreen({ navigation }) {
           >
             <Image source={item.coverImage} style={styles.coverImage} />
             <View style={styles.detailsContainer}>
-              <Image source={item.logo} style={styles.logo} />
               <View style={styles.textContainer}>
-                <Text style={styles.name}>{item.name}</Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Image source={item.logo} style={styles.logo} />
+                  <Text style={styles.name}>{item.name}</Text>
+                </View>
                 <Text style={styles.cuisine}>{item.cuisine}</Text>
                 <Text style={styles.rating}>Rating: {item.rating}</Text>
                 <Text style={styles.priceRange}>
@@ -37,14 +70,21 @@ export default function FavorisScreen({ navigation }) {
                 </Text>
               </View>
             </View>
-            <Ionicons
-              name="heart-outline" //conditionnaly render name="heart"
-              size={25}
-              color={colors.primary}
-              style={{ marginRight: 7 }}
-            />
+            <TouchableOpacity
+              onPress={() => toggleFavorite(item.id)}
+              style={styles.favoriteButton}
+            >
+              <Ionicons
+                name={!isFavorite(item.id) ? "heart" : "heart-outline"}
+                size={25}
+                color={!isFavorite(item.id) ? colors.primary : "gray"}
+              />
+            </TouchableOpacity>
           </TouchableOpacity>
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </View>
   );
@@ -55,14 +95,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: "#fff",
-  },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
   },
   list: {
     flex: 1,
@@ -88,8 +120,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 33,
+    height: 33,
+    margin: 7,
+    marginBottom: 3,
+    marginLeft: 0,
     borderRadius: 25,
   },
   textContainer: {
@@ -98,10 +133,6 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: "bold",
-  },
-  location: {
-    fontSize: 14,
-    color: "#555",
   },
   cuisine: {
     fontSize: 14,
@@ -114,5 +145,8 @@ const styles = StyleSheet.create({
   priceRange: {
     fontSize: 14,
     color: "#555",
+  },
+  favoriteButton: {
+    padding: 5,
   },
 });

@@ -6,10 +6,13 @@ import Menu from "../Components/Menu";
 import { hexToRgb } from "../styles/hexToRgb";
 import colors from "../styles/colors";
 
-export default function SpecialOffersScreen({ navigation }) {
+export default function SpecialOffersScreen({ navigation, route }) {
   const { totalPrice, selectedItemsCount } = useSelector(
     (state) => state.basket
   );
+
+  // console.log(route.params.restaurantId);
+  //using this id fetch the menu from the backend instead
 
   return (
     <>
