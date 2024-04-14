@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  StatusBar,
 } from "react-native";
 import {
   useAnimatedStyle,
@@ -25,7 +26,7 @@ import ParallaxScrollView from "../Components/ParallaxScrollView";
 import AppText from "./../Components/AppText";
 import restaurantData from "../../assets/data/restaurantData";
 
-const VerticalMenu = ({ navigation, restaurantInfo }) => {
+const VerticalMenu = ({ navigation, restaurantInfo, score }) => {
   if (!restaurantInfo) {
     return <Text>Restaurant information not found.</Text>;
   }
@@ -66,7 +67,13 @@ const VerticalMenu = ({ navigation, restaurantInfo }) => {
         <Text style={{ fontSize: 16, marginBottom: 5, color: "grey" }}>
           {" "}
           <FontAwesome name="map-marker" size={19} color="grey" />{" "}
-          {/* {restaurantInfo.location} */}
+          {/* 
+          **************************
+          **************************
+          {restaurantInfo.location}* 
+          **************************
+          **************************
+          */}
           hay tilila agadir
         </Text>
       </View>
@@ -94,6 +101,7 @@ const VerticalMenu = ({ navigation, restaurantInfo }) => {
           onPress={() =>
             navigation.navigate("rewardsScreen", {
               restaurantId: restaurantInfo.id,
+              score: score,
             })
           }
         >
@@ -214,6 +222,7 @@ export default function RestorantScreen({ route, navigation }) {
 
   return (
     <>
+      <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.1)" />
       <ParallaxScrollView
         scrollEvent={onScroll}
         backgroundColor={"#fff"}
@@ -273,7 +282,14 @@ export default function RestorantScreen({ route, navigation }) {
           </View>
         )}
       >
-        <VerticalMenu navigation={navigation} restaurantInfo={restaurantInfo} />
+        <VerticalMenu
+          navigation={navigation}
+          restaurantInfo={restaurantInfo}
+          score={restaurantInfo.points ? restaurantInfo.points : 0}
+          //**************************/
+          //update the score to the real score of points by modifing the restaurant data - totalpoints
+          //**************************/
+        />
       </ParallaxScrollView>
 
       {/* basket */}

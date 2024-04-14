@@ -2,7 +2,7 @@ const restaurantData = [
   {
     id: 1,
     name: "Delizioso Italiano",
-    location: { latitude: 31.7917, longitude: -7.0926 }, // Location in Morocco
+    location: { latitude: 31.7917, longitude: -7.0926 },
     coverImage: require("../../assets/image1.png"),
     logo: require("../../assets/logo.jpeg"),
     cuisine: "Italian",
@@ -14,11 +14,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$$",
+    points: 61,
   },
   {
     id: 2,
     name: "Taco Paradise",
-    location: { latitude: 33.9716, longitude: -6.8498 }, // Location in Morocco
+    location: { latitude: 33.9716, longitude: -6.8498 },
     coverImage: require("../../assets/image3.jpeg"),
     logo: require("../../assets/logo2.png"),
     cuisine: "Mexican",
@@ -30,11 +31,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$",
+    points: 89,
   },
   {
     id: 3,
     name: "Sushi Haven",
-    location: { latitude: 30.4278, longitude: -9.5981 }, // Location in Morocco
+    location: { latitude: 30.4278, longitude: -9.5981 },
     coverImage: require("../../assets/image4.jpeg"),
     logo: require("../../assets/logo1.jpeg"),
     cuisine: "Japanese",
@@ -46,11 +48,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$$$",
+    points: 99,
   },
   {
     id: 4,
     name: "Burger Joint",
-    location: { latitude: 34.0209, longitude: -6.8411 }, // Location in Morocco
+    location: { latitude: 34.0209, longitude: -6.8411 },
     coverImage: require("../../assets/images.jpeg"),
     logo: require("../../assets/logo2.png"),
     cuisine: "American",
@@ -62,11 +65,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$",
+    points: 190,
   },
   {
     id: 5,
     name: "Curry House",
-    location: { latitude: 31.6333, longitude: -8.0 }, // Location in Morocco
+    location: { latitude: 31.6333, longitude: -8.0 },
     coverImage: require("../../assets/image2.jpeg"),
     logo: require("../../assets/logo3.png"),
     cuisine: "Indian",
@@ -78,11 +82,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$",
+    points: 0,
   },
   {
     id: 6,
     name: "Seafood Delight",
-    location: { latitude: 32.3106, longitude: -9.2362 }, // Location in Morocco
+    location: { latitude: 32.3106, longitude: -9.2362 },
     coverImage: require("../../assets/image4.jpeg"),
     logo: require("../../assets/logo1.jpeg"),
     cuisine: "Seafood",
@@ -94,11 +99,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$$",
+    points: 289,
   },
   {
     id: 7,
     name: "Pho Noodle House",
-    location: { latitude: 31.6356, longitude: -8.0083 }, // Location in Morocco
+    location: { latitude: 31.6356, longitude: -8.0083 },
     coverImage: require("../../assets/image3.jpeg"),
     logo: require("../../assets/logo.jpeg"),
     cuisine: "Vietnamese",
@@ -110,11 +116,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$",
+    points: 1,
   },
   {
     id: 166,
     name: "Pizza Palace",
-    location: { latitude: 32.2995, longitude: -9.2371 }, // Location in Morocco
+    location: { latitude: 32.2995, longitude: -9.2371 },
     coverImage: require("../../assets/image4.jpeg"),
     logo: require("../../assets/logo3.png"),
     cuisine: "Pizza",
@@ -126,11 +133,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$",
+    points: 89,
   },
   {
     id: 167,
     name: "Barbecue Heaven",
-    location: { latitude: 30.4333, longitude: -9.6 }, // Location in Morocco
+    location: { latitude: 30.4333, longitude: -9.6 },
     coverImage: require("../../assets/image3.jpeg"),
     logo: require("../../assets/logo2.png"),
     cuisine: "Barbecue",
@@ -142,11 +150,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$$",
+    points: 18,
   },
   {
     id: 168,
     name: "Mediterranean Delight",
-    location: { latitude: 35.6751, longitude: -5.911 }, // Location in Morocco
+    location: { latitude: 35.6751, longitude: -5.911 },
     coverImage: require("../../assets/images.jpeg"),
     logo: require("../../assets/logo.jpeg"),
     cuisine: "Mediterranean",
@@ -158,11 +167,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$$",
+    points: 80,
   },
   {
     id: 169,
     name: "Vegetarian Delight",
-    location: { latitude: 30.4515, longitude: -9.5005 }, // Location in Morocco
+    location: { latitude: 30.4515, longitude: -9.5005 },
     coverImage: require("../../assets/images.jpeg"),
     logo: require("../../assets/logo1.jpeg"),
     cuisine: "Vegetarian",
@@ -174,11 +184,12 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$",
+    points: 819,
   },
   {
     id: 170,
     name: "Steakhouse Supreme",
-    location: { latitude: 30.4667, longitude: -9.6 }, // Location in Morocco
+    location: { latitude: 30.4667, longitude: -9.6 },
     coverImage: require("../../assets/image4.jpeg"),
     logo: require("../../assets/logo2.png"),
     cuisine: "Steakhouse",
@@ -190,6 +201,7 @@ const restaurantData = [
     email: "info@deliciousbites.com",
     likes: 1000,
     priceRange: "$$$",
+    points: 319,
   },
 ];
 

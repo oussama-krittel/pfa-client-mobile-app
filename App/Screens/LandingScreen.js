@@ -1,5 +1,11 @@
-import React, { useRef, useState, useEffect } from "react";
-import { View, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useRef, useState } from "react";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  StatusBar,
+} from "react-native";
 import colors from "../styles/colors";
 import BottomSheet from "@gorhom/bottom-sheet";
 import BottomSheetContent from "../Components/BottomSheetContent";
@@ -26,7 +32,7 @@ const getNearbyRestaurants = (data, userLocation) => {
       ...restaurant,
       distance: parseFloat(
         (calculateDistance(userLocation, restaurant.location) / 1000).toFixed(2)
-      ), // Convert to kilometers and round to 2 decimal places
+      ),
     }))
     .sort((a, b) => a.distance - b.distance)
     .slice(0, DATA_PER_LIST);
@@ -74,48 +80,13 @@ export default function LandingScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <LandingScreenHeader
-        openBottomSheet={openBottomSheet}
-        navigation={navigation}
-      />
-      <TouchableOpacity
-        style={[
-          styles.overlay,
-          { display: bottomSheetVisible ? "flex" : "none" },
-        ]}
-        activeOpacity={1}
-        onPress={closeBottomSheet}
-      />
-      <ScrollView style={{ flex: 1 }}>
-        <HorizontalScrollComponent
-          title="Recommendations"
-          cards={randomRecommendations(data)}
+    <View style={{ flex: 1 }}>
+      <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0)" />
+      <View style={styles.container}>
+        <LandingScreenHeader
+          openBottomSheet={openBottomSheet}
           navigation={navigation}
         />
-        <HorizontalScrollComponent
-          title="Near You"
-          distanceData={getNearbyRestaurants(data, userLocation).map(
-            (restaurant) => restaurant.distance
-          )}
-          cards={getNearbyRestaurants(data, userLocation)}
-          navigation={navigation}
-        />
-
-        <HorizontalScrollComponent
-          title="Most Popular"
-          cards={data.slice(0, DATA_PER_LIST)}
-          navigation={navigation}
-        />
-        <HorizontalScrollComponent
-          title="Most Ratings"
-          cards={data
-            .slice()
-            .sort((a, b) => b.rating - a.rating)
-            .slice(0, DATA_PER_LIST)}
-          navigation={navigation}
-        />
-
         <TouchableOpacity
           style={[
             styles.overlay,
@@ -124,20 +95,56 @@ export default function LandingScreen({ navigation }) {
           activeOpacity={1}
           onPress={closeBottomSheet}
         />
-      </ScrollView>
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={["40%"]}
-        index={-1}
-        enablePanDownToClose={true}
-        handleIndicatorStyle={{
-          backgroundColor: colors.secondary,
-          borderRadius: 10,
-        }}
-        onClose={closeBottomSheet}
-      >
-        <BottomSheetContent navigation={navigation} />
-      </BottomSheet>
+        <ScrollView style={styles.scrollView}>
+          <HorizontalScrollComponent
+            title="Recommendations"
+            cards={randomRecommendations(data)}
+            navigation={navigation}
+          />
+          <HorizontalScrollComponent
+            title="Near You"
+            distanceData={getNearbyRestaurants(data, userLocation).map(
+              (restaurant) => restaurant.distance
+            )}
+            cards={getNearbyRestaurants(data, userLocation)}
+            navigation={navigation}
+          />
+          <HorizontalScrollComponent
+            title="Most Popular"
+            cards={data.slice(0, DATA_PER_LIST)}
+            navigation={navigation}
+          />
+          <HorizontalScrollComponent
+            title="Most Ratings"
+            cards={data
+              .slice()
+              .sort((a, b) => b.rating - a.rating)
+              .slice(0, DATA_PER_LIST)}
+            navigation={navigation}
+          />
+          <TouchableOpacity
+            style={[
+              styles.overlay,
+              { display: bottomSheetVisible ? "flex" : "none" },
+            ]}
+            activeOpacity={1}
+            onPress={closeBottomSheet}
+          />
+        </ScrollView>
+        <BottomSheet
+          ref={bottomSheetRef}
+          snapPoints={["40%"]}
+          index={-1}
+          enablePanDownToClose={true}
+          handleIndicatorStyle={{
+            backgroundColor: colors.secondary,
+            borderRadius: 10,
+          }}
+          onClose={closeBottomSheet}
+        >
+          <BottomSheetContent navigation={navigation} />
+        </BottomSheet>
+      </View>
     </View>
   );
 }
@@ -149,5 +156,8 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "rgba(0, 0, 0, 0.2)",
+  },
+  scrollView: {
+    flex: 1,
   },
 });

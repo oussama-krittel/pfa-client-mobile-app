@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   Text,
+  Dimensions,
   FlatList,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ConfettiCannon from "react-native-confetti-cannon";
+import QRCode from "react-native-qrcode-svg";
 
 import store from "../context/store";
 import { basketCleared, reduceProduct } from "../context/basket";
@@ -15,31 +17,52 @@ import AppText from "../Components/AppText";
 import SwipeableRow from "../Components/SwipeableRow";
 import colors from "../styles/colors";
 import Screen from "./../Components/Screen";
+import { reducePointProduct } from "../context/basket";
+import OrderConfirmedScreen from "./OrderConfirmedScreen";
+
+const windowWidth = Dimensions.get("window").width;
 
 function BasketScreen({ navigation }) {
   const dispatch = useDispatch();
-  const { products, totalPrice, selectedItemsCount } = useSelector(
-    (state) => state.basket
-  );
+  const {
+    products,
+    pointsProducts,
+    totalPrice,
+    totalBonusPoints,
+    selectedItemsCount,
+    totalPoints,
+  } = useSelector((state) => state.basket);
 
   store.subscribe(() => {
     console.log("store changed in basketScreen");
   });
 
-  const [order, setOrder] = useState(false);
+  useEffect(() => {
+    console.log(totalBonusPoints);
+    console.log(pointsProducts);
+  }, []);
 
-  const FEES = {
-    service: 2.99,
-    delivery: 5.99,
-  };
+  const [bonus, setBonus] = useState(totalBonusPoints);
+
+  const [order, setOrder] = useState(false);
+  const [preOrder, setPreOrder] = useState(false);
 
   const startCheckout = () => {
+    setPreOrder(false);
     setOrder(true);
     dispatch(basketCleared());
   };
 
+  const readyToCheckOut = () => {
+    setPreOrder(true);
+  };
+
+  const formatPrice = (price) => {
+    return Math.max(0, parseFloat(price).toFixed(2));
+  };
+
   return (
-    <>
+    <Screen>
       {order && (
         <ConfettiCannon
           count={200}
@@ -49,32 +72,74 @@ function BasketScreen({ navigation }) {
           autoStart={true}
         />
       )}
-      {order && (
-        <View style={{ marginTop: "50%", padding: 20, alignItems: "center" }}>
-          <Text
-            style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}
-          >
-            Thank you for your order!
-          </Text>
+      {order && <OrderConfirmedScreen navigation={navigation} bonus={bonus} />}
+
+      {preOrder && (
+        <View
+          style={{
+            marginTop: "15%",
+            padding: 20,
+            justifyContent: "space-around",
+            alignItems: "center",
+            flex: 1,
+          }}
+        >
+          <QRCode value="http://awesome.link.qr" size={0.8 * windowWidth} />
           <TouchableOpacity
-            style={styles.orderBtn}
-            onPress={() => navigation.goBack()}
+            style={{
+              padding: 15,
+              backgroundColor: colors.primary,
+              margin: 15,
+              borderRadius: 10,
+            }}
+            onPress={startCheckout}
           >
-            <Text style={styles.footerText}>New order</Text>
+            <Text style={styles.footerText}>Order now</Text>
           </TouchableOpacity>
         </View>
       )}
-      {!order && (
+      {!preOrder && !order && (
         <>
           <FlatList
             data={products}
-            ListHeaderComponent={<Text style={styles.section}>Items</Text>}
+            ListHeaderComponent={
+              <>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={styles.section}> Items</Text>
+                  <AppText style={{ marginRight: 10 }}>
+                    {formatPrice(totalPrice)} $
+                  </AppText>
+                </View>
+                {products.length === 0 ? (
+                  <View style={styles.emptyView}>
+                    <AppText style={styles.emptyText}>
+                      No items in the basket
+                    </AppText>
+                  </View>
+                ) : (
+                  <AppText style={styles.section2}>
+                    + Bonus Points: {totalBonusPoints} pt
+                  </AppText>
+                )}
+              </>
+            }
             ItemSeparatorComponent={() => (
               <View style={{ height: 1, backgroundColor: colors.light }} />
             )}
             renderItem={({ item }) =>
               item.quantity > 0 ? ( // Render SwipeableRow only if quantity is greater than 0
-                <SwipeableRow onDelete={() => dispatch(reduceProduct(item))}>
+                <SwipeableRow
+                  onDelete={() => {
+                    dispatch(reduceProduct(item));
+                    setBonus(bonus - item.bonusPoints);
+                  }}
+                >
                   <View style={styles.row}>
                     <AppText style={{ color: colors.secondary, fontSize: 18 }}>
                       {item.quantity}x
@@ -90,32 +155,47 @@ function BasketScreen({ navigation }) {
               ) : null
             }
             ListFooterComponent={
-              <View>
+              <>
                 <View
-                  style={{ height: 1, backgroundColor: colors.medium }}
-                ></View>
-                <View style={styles.totalRow}>
-                  <Text style={styles.total}>Subtotal</Text>
-                  <Text style={{ fontSize: 18 }}>${totalPrice}</Text>
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={styles.section}>Rewards</Text>
+                  <AppText style={{ marginRight: 10 }}>
+                    {totalPoints} pt
+                  </AppText>
                 </View>
 
-                <View style={styles.totalRow}>
-                  <Text style={styles.total}>Service fee</Text>
-                  <Text style={{ fontSize: 18 }}>${FEES.service}</Text>
-                </View>
-
-                <View style={styles.totalRow}>
-                  <Text style={styles.total}>Delivery fee</Text>
-                  <Text style={{ fontSize: 18 }}>${FEES.delivery}</Text>
-                </View>
-
-                <View style={styles.totalRow}>
-                  <Text style={styles.total}>Order Total</Text>
-                  <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                    ${(totalPrice + FEES.service + FEES.delivery).toFixed(2)}
-                  </Text>
-                </View>
-              </View>
+                {pointsProducts.length === 0 && (
+                  <View style={styles.emptyView}>
+                    <AppText style={styles.emptyText}>
+                      No rewards in the basket
+                    </AppText>
+                  </View>
+                )}
+                <FlatList
+                  data={pointsProducts}
+                  renderItem={({ item }) => (
+                    <SwipeableRow
+                      onDelete={() => dispatch(reducePointProduct(item))}
+                    >
+                      <View style={styles.row}>
+                        <AppText
+                          style={{ color: colors.secondary, fontSize: 18 }}
+                        >
+                          {item.quantity}x
+                        </AppText>
+                        <AppText style={{ flex: 1, fontSize: 18 }}>
+                          {item.name}
+                        </AppText>
+                      </View>
+                    </SwipeableRow>
+                  )}
+                />
+              </>
             }
           />
 
@@ -123,7 +203,7 @@ function BasketScreen({ navigation }) {
             <Screen style={{ backgroundColor: "#fff" }}>
               <TouchableOpacity
                 style={styles.fullButton}
-                onPress={startCheckout}
+                onPress={readyToCheckOut}
               >
                 <Text style={styles.footerText}>Order now</Text>
               </TouchableOpacity>
@@ -131,7 +211,7 @@ function BasketScreen({ navigation }) {
           </View>
         </>
       )}
-    </>
+    </Screen>
   );
 }
 
@@ -147,16 +227,22 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     margin: 16,
+    color: colors.dark,
   },
-  totalRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 10,
-    backgroundColor: "#fff",
-  },
-  total: {
+  section2: {
     fontSize: 18,
-    color: colors.medium,
+    fontWeight: "bold",
+    margin: 10,
+    color: colors.secondary,
+  },
+  emptyView: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: colors.dark,
   },
   footer: {
     position: "absolute",

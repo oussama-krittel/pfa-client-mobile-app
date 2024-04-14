@@ -5,6 +5,7 @@ import { View, TouchableOpacity, Text } from "react-native";
 import Menu from "../Components/Menu";
 import { hexToRgb } from "../styles/hexToRgb";
 import colors from "../styles/colors";
+import Screen from "../Components/Screen";
 
 export default function SpecialOffersScreen({ navigation, route }) {
   const { totalPrice, selectedItemsCount } = useSelector(
@@ -15,7 +16,7 @@ export default function SpecialOffersScreen({ navigation, route }) {
   //using this id fetch the menu from the backend instead
 
   return (
-    <>
+    <Screen>
       <Menu DATA={DATA} navigation={navigation} />
 
       {/* basket */}
@@ -31,7 +32,7 @@ export default function SpecialOffersScreen({ navigation, route }) {
           </TouchableOpacity>
         </View>
       )}
-    </>
+    </Screen>
   );
 }
 

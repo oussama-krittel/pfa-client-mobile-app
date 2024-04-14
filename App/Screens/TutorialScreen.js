@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import colors from "../styles/colors";
 
+const windowWidth = Dimensions.get("window").width;
+
 function Step1() {
   return (
     <View style={styles.stepContainer}>
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    paddingHorizontal:7,
+    paddingHorizontal: 7,
   },
   buttonText: {
     fontSize: 32,
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
   selectedDot: {
     width: 12,
     height: 12,
-    borderRadius:7,
+    borderRadius: 7,
     backgroundColor: colors.primary,
   },
 });

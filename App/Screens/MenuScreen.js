@@ -5,6 +5,7 @@ import { View, TouchableOpacity, Text } from "react-native";
 import Menu from "../Components/Menu";
 import { hexToRgb } from "../styles/hexToRgb";
 import colors from "../styles/colors";
+import Screen from "../Components/Screen";
 
 export default function MenuScreen({ navigation, route }) {
   const { totalPrice, selectedItemsCount } = useSelector(
@@ -14,7 +15,7 @@ export default function MenuScreen({ navigation, route }) {
   // console.log(route.params.restaurantId);
   //using this id fetch the menu from the backend instead
   return (
-    <>
+    <Screen>
       <Menu DATA={DATA} navigation={navigation} />
 
       {/* basket */}
@@ -30,7 +31,7 @@ export default function MenuScreen({ navigation, route }) {
           </TouchableOpacity>
         </View>
       )}
-    </>
+    </Screen>
   );
 }
 
@@ -87,6 +88,7 @@ const DATA = [
         info: "Toasted bread with garlic",
         price: 5.99,
         img: require("../../assets/image1.png"),
+        bonusPoints: 15,
       },
       {
         id: 2,
@@ -94,6 +96,7 @@ const DATA = [
         info: "Fresh salad with Caesar dressing",
         price: 8.99,
         img: require("../../assets/image2.jpeg"),
+        bonusPoints: 15,
       },
       // Add more starter items here if needed
       {
@@ -101,14 +104,16 @@ const DATA = [
         name: "Bruschetta",
         info: "Toasted bread topped with tomatoes, basil, and olive oil",
         price: 6.99,
-        img: require("../../assets/image3.jpeg"), // Reusing the third image
+        img: require("../../assets/image3.jpeg"),
+        bonusPoints: 15, // Reusing the third image
       },
       {
         id: 4,
         name: "Mozzarella Sticks",
         info: "Fried mozzarella cheese sticks with marinara sauce",
         price: 7.99,
-        img: require("../../assets/image4.jpeg"), // Reusing the fourth image
+        img: require("../../assets/image4.jpeg"),
+        bonusPoints: 15, // Reusing the fourth image
       },
     ],
   },
@@ -122,6 +127,7 @@ const DATA = [
         info: "Classic Italian pasta dish",
         price: 12.99,
         img: require("../../assets/image3.jpeg"),
+        bonusPoints: 15,
       },
       {
         id: 6,
@@ -129,6 +135,7 @@ const DATA = [
         info: "Freshly grilled salmon fillet",
         price: 15.99,
         img: require("../../assets/image4.jpeg"),
+        bonusPoints: 15,
       },
       // Add more main course items here if needed
       {
@@ -137,13 +144,15 @@ const DATA = [
         info: "Breaded chicken topped with marinara sauce and melted cheese",
         price: 14.99,
         img: require("../../assets/image1.png"), // Reusing the first image
+        bonusPoints: 15,
       },
       {
         id: 8,
         name: "Vegetable Stir Fry",
         info: "Assorted vegetables stir-fried in a savory sauce",
         price: 11.99,
-        img: require("../../assets/image2.jpeg"), // Reusing the second image
+        img: require("../../assets/image2.jpeg"),
+        bonusPoints: 15, // Reusing the second image
       },
     ],
   },
@@ -157,6 +166,7 @@ const DATA = [
         info: "Rich chocolate cake with icing",
         price: 7.99,
         img: require("../../assets/image1.png"),
+        bonusPoints: 15,
       },
       {
         id: 10,
@@ -164,6 +174,7 @@ const DATA = [
         info: "Classic Italian dessert with coffee flavor",
         price: 9.99,
         img: require("../../assets/image2.jpeg"),
+        bonusPoints: 15,
       },
       // Add more dessert items here if needed
       {
@@ -171,14 +182,16 @@ const DATA = [
         name: "Cheesecake",
         info: "Creamy cheesecake with a graham cracker crust",
         price: 8.99,
-        img: require("../../assets/image3.jpeg"), // Reusing the third image
+        img: require("../../assets/image3.jpeg"),
+        bonusPoints: 15, // Reusing the third image
       },
       {
         id: 12,
         name: "Fruit Salad",
         info: "Fresh fruit salad with honey-lime dressing",
         price: 6.99,
-        img: require("../../assets/image4.jpeg"), // Reusing the fourth image
+        img: require("../../assets/image4.jpeg"),
+        bonusPoints: 15, // Reusing the fourth image
       },
     ],
   },

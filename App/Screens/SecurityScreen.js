@@ -6,9 +6,10 @@ import {
   Text,
   StyleSheet,
   Alert,
+  ScrollView,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons"; // Import Ionicons
+import { Ionicons } from "@expo/vector-icons";
 import { hexToRgb } from "../styles/hexToRgb";
 
 import AppText from "../Components/AppText";
