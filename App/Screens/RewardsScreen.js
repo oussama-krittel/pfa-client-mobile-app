@@ -13,7 +13,7 @@ export default function RewardsScreen({ navigation, route }) {
   );
 
   return (
-    <Screen >
+    <Screen>
       <RewardsMenu
         DATA={DATA}
         navigation={navigation}

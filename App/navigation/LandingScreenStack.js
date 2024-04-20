@@ -14,6 +14,7 @@ import SpecialOffersScreen from "../Screens/SpecialOffersScreen";
 import FeedBackScreen from "../Screens/FeedBackScreen";
 import TutorialScreen from "../Screens/TutorialScreen";
 import RewardDichScreen from "../Screens/RewardDishScreen";
+import DiscountDishScreen from "../Screens/DiscoutDishScreen";
 
 const Stack = createStackNavigator();
 
@@ -104,6 +105,34 @@ export default function LandingScreenStack() {
       <Stack.Screen
         name="RewardsDishScreen"
         component={RewardDichScreen}
+        options={({ navigation }) => ({
+          presentation: "modal",
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#fff",
+                borderRadius: 20,
+                padding: 6,
+                marginLeft: 8,
+              }}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Ionicons
+                name="close-outline"
+                size={28}
+                color={colors.secondary}
+              />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="DiscountDishScreen"
+        component={DiscountDishScreen}
         options={({ navigation }) => ({
           presentation: "modal",
           headerTitle: "",

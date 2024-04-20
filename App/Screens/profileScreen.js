@@ -5,20 +5,13 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image,
-  Platform,
-  Alert,
-  Linking,
   ScrollView,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import * as ImagePicker from "expo-image-picker";
-
 import colors from "../styles/colors";
 import { hexToRgb } from "../styles/hexToRgb";
-import AppText from "../Components/AppText";
 
 const initialUserData = {
   firstName: "John",
@@ -29,33 +22,10 @@ const initialUserData = {
   gender: "",
 };
 
-export default function ProfileScreen({ navigation }) {
+export default function AccountScreen({ navigation }) {
   const [userData, setUserData] = useState(initialUserData);
   const [isEditing, setIsEditing] = useState(false);
   const [isRequiredVisible, setIsRequiredVisible] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
-
-  const requestMediaLibraryPermission = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert(
-        "Permission Required",
-        "Please grant permission to access your media library to change the profile image.",
-        [
-          {
-            text: "Cancel",
-            style: "cancel",
-          },
-          {
-            text: "Go to Settings",
-            onPress: () => Linking.openSettings(),
-          },
-        ]
-      );
-      return false;
-    }
-    return true;
-  };
 
   const handleEditPress = () => {
     if (isEditing) {
@@ -75,14 +45,12 @@ export default function ProfileScreen({ navigation }) {
     setIsRequiredVisible(false);
     setIsEditing(false);
     console.log("Updated user data:", userData);
-    console.log("Profile image:", profileImage);
   };
 
   const handleCancelPress = () => {
     setUserData(initialUserData);
     setIsEditing(false);
     setIsRequiredVisible(false);
-    setProfileImage(null); // Reset profile image on cancel
   };
 
   const isRequiredFieldsFilled = () => {
@@ -99,23 +67,6 @@ export default function ProfileScreen({ navigation }) {
     });
   };
 
-  const pickImage = async () => {
-    const granted = await requestMediaLibraryPermission();
-    if (granted) {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      if (!result.cancelled) {
-        console.log(result.uri);
-        setProfileImage(result.uri);
-      }
-    }
-  };
-
   return (
     <ScrollView>
       <View style={styles.Topheader}>
@@ -125,7 +76,7 @@ export default function ProfileScreen({ navigation }) {
         >
           <Ionicons name="arrow-back-outline" size={28} color="white" />
         </TouchableOpacity>
-        <AppText style={styles.TopheaderTitle}>Account</AppText>
+        <Text style={styles.TopheaderTitle}>Account</Text>
         <View style={styles.rightEmptySpace} />
       </View>
       <View style={styles.container}>
@@ -159,30 +110,6 @@ export default function ProfileScreen({ navigation }) {
         {isEditing && isRequiredVisible && (
           <Text style={styles.requiredText}>* Required information</Text>
         )}
-        <TouchableOpacity onPress={isEditing ? pickImage : null}>
-          <View style={styles.profileImageContainer}>
-            {profileImage ? (
-              <Image
-                source={{ uri: profileImage }}
-                style={styles.profileImage}
-              />
-            ) : (
-              <FontAwesome
-                name="user-circle"
-                size={120}
-                color={colors.medium}
-              />
-            )}
-            {isEditing && (
-              <FontAwesome
-                name="pencil"
-                size={24}
-                color={colors.secondary}
-                style={styles.editIcon}
-              />
-            )}
-          </View>
-        </TouchableOpacity>
         <View style={styles.inputContainer}>
           <Text style={styles.inputTitle}>
             First Name{isEditing && <Text style={styles.required}> *</Text>}
@@ -336,3 +263,4 @@ const styles = StyleSheet.create({
     padding: 3,
   },
 });
+

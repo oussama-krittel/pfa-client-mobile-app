@@ -2,10 +2,10 @@ import React, { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { View, TouchableOpacity, Text } from "react-native";
 
-import Menu from "../Components/Menu";
 import { hexToRgb } from "../styles/hexToRgb";
 import colors from "../styles/colors";
 import Screen from "../Components/Screen";
+import DiscountMenu from "../Components/DiscountMenu";
 
 export default function SpecialOffersScreen({ navigation, route }) {
   const { totalPrice, selectedItemsCount } = useSelector(
@@ -17,7 +17,7 @@ export default function SpecialOffersScreen({ navigation, route }) {
 
   return (
     <Screen>
-      <Menu DATA={DATA} navigation={navigation} />
+      <DiscountMenu DATA={DATA} navigation={navigation} />
 
       {/* basket */}
       {selectedItemsCount > 0 && (
@@ -84,103 +84,115 @@ const DATA = [
     title: "Starters",
     data: [
       {
-        id: 1,
-        name: "Garlic Bread",
-        info: "Toasted bread with garlic",
-        price: 5.99,
-        img: require("../../assets/image1.png"),
+        product: {
+          id: 1,
+          name: "Garlic Bread",
+          info: "Toasted bread with garlic",
+          price: 5.99,
+          bonusPoints: 10,
+          img: require("../../assets/image1.png"),
+        },
+        discountPercentage: 10, // Example discount percentage
       },
       {
-        id: 2,
-        name: "Caesar Salad",
-        info: "Fresh salad with Caesar dressing",
-        price: 8.99,
-        img: require("../../assets/image2.jpeg"),
+        product: {
+          id: 2,
+          name: "Caesar Salad",
+          info: "Fresh salad with Caesar dressing",
+          price: 8.99,
+          bonusPoints: 15,
+          img: require("../../assets/image2.jpeg"),
+        },
+        discountPercentage: 15, // Example discount percentage
+      },
+      {
+        product: {
+          id: 3,
+          name: "Bruschetta",
+          info: "Toasted bread topped with tomatoes, basil, and olive oil",
+          price: 6.99,
+          bonusPoints: 12,
+          img: require("../../assets/image3.jpeg"),
+        },
+        discountPercentage: 20, // Example discount percentage
       },
       // Add more starter items here if needed
-      {
-        id: 3,
-        name: "Bruschetta",
-        info: "Toasted bread topped with tomatoes, basil, and olive oil",
-        price: 6.99,
-        img: require("../../assets/image3.jpeg"), // Reusing the third image
-      },
-      {
-        id: 4,
-        name: "Mozzarella Sticks",
-        info: "Fried mozzarella cheese sticks with marinara sauce",
-        price: 7.99,
-        img: require("../../assets/image4.jpeg"), // Reusing the fourth image
-      },
     ],
   },
-
   {
     title: "Main Courses",
     data: [
       {
-        id: 5,
-        name: "Spaghetti Bolognese",
-        info: "Classic Italian pasta dish",
-        price: 12.99,
-        img: require("../../assets/image3.jpeg"),
+        product: {
+          id: 5,
+          name: "Spaghetti Bolognese",
+          info: "Classic Italian pasta dish",
+          price: 12.99,
+          bonusPoints: 20,
+          img: require("../../assets/image3.jpeg"),
+        },
+        discountPercentage: 25, // Example discount percentage
       },
       {
-        id: 6,
-        name: "Grilled Salmon",
-        info: "Freshly grilled salmon fillet",
-        price: 15.99,
-        img: require("../../assets/image4.jpeg"),
+        product: {
+          id: 6,
+          name: "Grilled Salmon",
+          info: "Freshly grilled salmon fillet",
+          price: 15.99,
+          bonusPoints: 25,
+          img: require("../../assets/image4.jpeg"),
+        },
+        discountPercentage: 30, // Example discount percentage
+      },
+      {
+        product: {
+          id: 7,
+          name: "Chicken Parmesan",
+          info: "Breaded chicken topped with marinara sauce and melted cheese",
+          price: 14.99,
+          bonusPoints: 22,
+          img: require("../../assets/image1.png"),
+        },
+        discountPercentage: 15, // Example discount percentage
       },
       // Add more main course items here if needed
-      {
-        id: 7,
-        name: "Chicken Parmesan",
-        info: "Breaded chicken topped with marinara sauce and melted cheese",
-        price: 14.99,
-        img: require("../../assets/image1.png"), // Reusing the first image
-      },
-      {
-        id: 8,
-        name: "Vegetable Stir Fry",
-        info: "Assorted vegetables stir-fried in a savory sauce",
-        price: 11.99,
-        img: require("../../assets/image2.jpeg"), // Reusing the second image
-      },
     ],
   },
-  // Add more sections if needed
   {
     title: "Desserts",
     data: [
       {
-        id: 9,
-        name: "Chocolate Cake",
-        info: "Rich chocolate cake with icing",
-        price: 7.99,
-        img: require("../../assets/image1.png"),
+        product: {
+          id: 9,
+          name: "Chocolate Cake",
+          info: "Rich chocolate cake with icing",
+          price: 7.99,
+          bonusPoints: 15,
+          img: require("../../assets/image1.png"),
+        },
+        discountPercentage: 20, // Example discount percentage
       },
       {
-        id: 10,
-        name: "Tiramisu",
-        info: "Classic Italian dessert with coffee flavor",
-        price: 9.99,
-        img: require("../../assets/image2.jpeg"),
-      },
-      // Add more dessert items here if needed
-      {
-        id: 11,
-        name: "Cheesecake",
-        info: "Creamy cheesecake with a graham cracker crust",
-        price: 8.99,
-        img: require("../../assets/image3.jpeg"), // Reusing the third image
+        product: {
+          id: 10,
+          name: "Tiramisu",
+          info: "Classic Italian dessert with coffee flavor",
+          price: 9.99,
+          bonusPoints: 18,
+          img: require("../../assets/image2.jpeg"),
+        },
+        discountPercentage: 10, // Example discount percentage
       },
       {
-        id: 12,
-        name: "Fruit Salad",
-        info: "Fresh fruit salad with honey-lime dressing",
-        price: 6.99,
-        img: require("../../assets/image4.jpeg"), // Reusing the fourth image
+        product: {
+          id: 11,
+          name: "Cheesecake",
+          info: "Creamy cheesecake with a graham cracker crust",
+          price: 8.99,
+          bonusPoints: 16,
+          img: require("../../assets/image3.jpeg"),
+        },
+        discountPercentage: 15, // Example discount percentage
       },
     ],
   },

@@ -1,9 +1,10 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, Alert } from "react-native";
 import { DrawerItem, createDrawerNavigator } from "@react-navigation/drawer";
 import { DrawerItemList } from "@react-navigation/drawer";
 import DrawerHeader from "../Components/DrawerHeader";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import MapScreenStack from "./MapScreenStack";
 import colors from "../styles/colors";
@@ -15,7 +16,52 @@ import SecurityScreen from "../Screens/SecurityScreen";
 
 const Drawer = createDrawerNavigator();
 
-export default function MyDrawer() {
+export default function MyDrawer({ navigation }) {
+  const [userDetails, setUserDetails] = React.useState();
+  React.useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    const userData = await AsyncStorage.getItem("userData");
+    if (userData) {
+      setUserDetails(JSON.parse(userData));
+    }
+  };
+
+  const logout = () => {
+    // Function to show the alert
+    const showAlert = () => {
+      Alert.alert(
+        "Logout",
+        "Are you sure you want to logout?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
+            text: "Logout",
+            onPress: () => executeLogout(),
+          },
+        ],
+        { cancelable: false }
+      );
+    };
+
+    // Function to execute logout
+    const executeLogout = () => {
+      AsyncStorage.setItem(
+        "userData",
+        JSON.stringify({ ...userDetails, loggedIn: false })
+      );
+      navigation.navigate("LoginScreen");
+    };
+
+    // Show the alert
+    showAlert();
+  };
+
   return (
     <Drawer.Navigator
       initialRouteName="landing"
@@ -37,6 +83,7 @@ export default function MyDrawer() {
             <DrawerHeader />
             <DrawerItemList {...props} />
             <DrawerItem
+              onPress={logout}
               label={"LogOut"}
               icon={({ color, size }) => (
                 <Ionicons

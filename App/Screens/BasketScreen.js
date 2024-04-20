@@ -17,7 +17,7 @@ import AppText from "../Components/AppText";
 import SwipeableRow from "../Components/SwipeableRow";
 import colors from "../styles/colors";
 import Screen from "./../Components/Screen";
-import { reducePointProduct } from "../context/basket";
+import { reducePointProduct, reduceDiscountProduct } from "../context/basket";
 import OrderConfirmedScreen from "./OrderConfirmedScreen";
 
 const windowWidth = Dimensions.get("window").width;
@@ -25,6 +25,7 @@ const windowWidth = Dimensions.get("window").width;
 function BasketScreen({ navigation }) {
   const dispatch = useDispatch();
   const {
+    discountProducts,
     products,
     pointsProducts,
     totalPrice,
@@ -116,7 +117,7 @@ function BasketScreen({ navigation }) {
                     {formatPrice(totalPrice)} $
                   </AppText>
                 </View>
-                {products.length === 0 ? (
+                {products.length === 0 && discountProducts.length == 0 ? (
                   <View style={styles.emptyView}>
                     <AppText style={styles.emptyText}>
                       No items in the basket
@@ -158,29 +159,18 @@ function BasketScreen({ navigation }) {
               <>
                 <View
                   style={{
+                    margin: 10,
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
                   }}
-                >
-                  <Text style={styles.section}>Rewards</Text>
-                  <AppText style={{ marginRight: 10 }}>
-                    {totalPoints} pt
-                  </AppText>
-                </View>
+                ></View>
 
-                {pointsProducts.length === 0 && (
-                  <View style={styles.emptyView}>
-                    <AppText style={styles.emptyText}>
-                      No rewards in the basket
-                    </AppText>
-                  </View>
-                )}
                 <FlatList
-                  data={pointsProducts}
+                  data={discountProducts}
                   renderItem={({ item }) => (
                     <SwipeableRow
-                      onDelete={() => dispatch(reducePointProduct(item))}
+                      onDelete={() => dispatch(reduceDiscountProduct(item))}
                     >
                       <View style={styles.row}>
                         <AppText
@@ -191,9 +181,64 @@ function BasketScreen({ navigation }) {
                         <AppText style={{ flex: 1, fontSize: 18 }}>
                           {item.name}
                         </AppText>
+                        <AppText
+                          style={{
+                            fontSize: 14,
+                            color: colors.primary,
+                          }}
+                        >
+                          -{item.discountPercentage}%
+                        </AppText>
+                        <AppText>${item.price * item.quantity}</AppText>
                       </View>
                     </SwipeableRow>
                   )}
+                  ListFooterComponent={
+                    <>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Text style={styles.section}>Rewards</Text>
+                        <AppText style={{ marginRight: 10 }}>
+                          {totalPoints} pt
+                        </AppText>
+                      </View>
+
+                      {pointsProducts.length === 0 && (
+                        <View style={styles.emptyView}>
+                          <AppText style={styles.emptyText}>
+                            No rewards in the basket
+                          </AppText>
+                        </View>
+                      )}
+                      <FlatList
+                        data={pointsProducts}
+                        renderItem={({ item }) => (
+                          <SwipeableRow
+                            onDelete={() => dispatch(reducePointProduct(item))}
+                          >
+                            <View style={styles.row}>
+                              <AppText
+                                style={{
+                                  color: colors.secondary,
+                                  fontSize: 18,
+                                }}
+                              >
+                                {item.quantity}x
+                              </AppText>
+                              <AppText style={{ flex: 1, fontSize: 18 }}>
+                                {item.name}
+                              </AppText>
+                            </View>
+                          </SwipeableRow>
+                        )}
+                      />
+                    </>
+                  }
                 />
               </>
             }

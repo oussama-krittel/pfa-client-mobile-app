@@ -5,6 +5,7 @@ const basketSlice = createSlice({
   initialState: {
     products: [],
     pointsProducts: [],
+    discountProducts: [], // Add discounts array
     totalPrice: 0,
     totalBonusPoints: 0,
     totalPoints: 0,
@@ -44,6 +45,7 @@ const basketSlice = createSlice({
     basketCleared: (state) => {
       state.products = [];
       state.pointsProducts = [];
+      state.discountProducts = []; // Clear discounts array
       state.totalPrice = 0;
       state.totalBonusPoints = 0;
       state.totalPoints = 0;
@@ -62,11 +64,10 @@ const basketSlice = createSlice({
         state.selectedItemsCount -= 1;
         state.totalBonusPoints -=
           state.products[existingProductIndex].bonusPoints;
-        //   state.pointsProducts[existingPointProductIndex].bonusPoints
       }
     },
 
-    //  reducers for point products
+    // Reducers for point products
 
     pointItemAdded: (state, action) => {
       const { product, quantity, points } = action.payload;
@@ -78,7 +79,6 @@ const basketSlice = createSlice({
       } else {
         state.pointsProducts.push({ ...product, quantity, points });
       }
-      // state.totalBonusPoints += product.bonusPoints * quantity;
       state.totalPoints += points * quantity;
       state.selectedItemsCount += quantity;
     },
@@ -120,8 +120,83 @@ const basketSlice = createSlice({
             state.pointsProducts[existingPointProductIndex].points;
           state.selectedItemsCount -= 1;
         }
-        // state.totalBonusPoints -=
-        //   state.pointsProducts[existingPointProductIndex].bonusPoints;
+      }
+    },
+
+    // Reducers for discount products
+
+    discountItemAdded: (state, action) => {
+      const { product, quantity, discountPercentage } = action.payload;
+      const existingProductIndex = state.discountProducts.findIndex(
+        (p) => p.id === product.id
+      );
+      if (existingProductIndex !== -1) {
+        state.discountProducts[existingProductIndex].quantity += quantity;
+      } else {
+        state.discountProducts.push({
+          ...product,
+          quantity,
+          discountPercentage,
+        });
+      }
+      const discountedPrice = product.price * (1 - discountPercentage / 100);
+      state.totalPrice += discountedPrice * quantity;
+      state.selectedItemsCount += quantity;
+    },
+    discountItemRemoved: (state, action) => {
+      const { id, quantity } = action.payload;
+      const existingDiscountProductIndex = state.discountProducts.findIndex(
+        (p) => p.id === id
+      );
+      if (existingDiscountProductIndex !== -1) {
+        if (
+          state.discountProducts[existingDiscountProductIndex].quantity <=
+          quantity
+        ) {
+          state.discountProducts.splice(existingDiscountProductIndex, 1);
+        } else {
+          state.discountProducts[existingDiscountProductIndex].quantity -=
+            quantity;
+        }
+        const discountedPrice =
+          state.discountProducts[existingDiscountProductIndex].price *
+          (1 -
+            state.discountProducts[existingDiscountProductIndex]
+              .discountPercentage /
+              100);
+        state.totalPrice -= discountedPrice * quantity;
+        state.selectedItemsCount -= quantity;
+      }
+    },
+    reduceDiscountProduct: (state, action) => {
+      const { id } = action.payload;
+      const existingDiscountProductIndex = state.discountProducts.findIndex(
+        (p) => p.id === id
+      );
+      if (existingDiscountProductIndex !== -1) {
+        if (
+          state.discountProducts[existingDiscountProductIndex].quantity === 1
+        ) {
+          const discountedPrice =
+            state.discountProducts[existingDiscountProductIndex].price *
+            (1 -
+              state.discountProducts[existingDiscountProductIndex]
+                .discountPercentage /
+                100);
+          state.totalPrice -= discountedPrice;
+          state.selectedItemsCount -= 1;
+          state.discountProducts.splice(existingDiscountProductIndex, 1);
+        } else {
+          const discountedPrice =
+            state.discountProducts[existingDiscountProductIndex].price *
+            (1 -
+              state.discountProducts[existingDiscountProductIndex]
+                .discountPercentage /
+                100);
+          state.totalPrice -= discountedPrice;
+          state.discountProducts[existingDiscountProductIndex].quantity -= 1;
+          state.selectedItemsCount -= 1;
+        }
       }
     },
   },
@@ -135,5 +210,8 @@ export const {
   pointItemAdded,
   pointItemRemoved,
   reducePointProduct,
+  discountItemAdded, // Add discount reducers to exports
+  discountItemRemoved,
+  reduceDiscountProduct,
 } = basketSlice.actions;
 export default basketSlice.reducer;
