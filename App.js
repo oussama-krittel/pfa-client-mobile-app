@@ -18,9 +18,10 @@ export default function App() {
   const [initialRouteName, setInitialRouteName] = React.useState("");
 
   React.useEffect(() => {
-    setTimeout(() => {
-      authUser();
-    }, 2000);
+    // setTimeout(() => {
+    getPermissions();
+    authUser();
+    // }, 2000);
   }, []);
 
   const authUser = async () => {
@@ -40,9 +41,6 @@ export default function App() {
       setInitialRouteName("RegistrationScreen");
     }
   };
-  useEffect(() => {
-    getPermissions();
-  }, []);
 
   return (
     <Provider store={store}>

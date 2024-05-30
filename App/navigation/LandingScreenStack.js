@@ -34,7 +34,7 @@ export default function LandingScreenStack() {
       <Stack.Screen
         name="SetLocation"
         component={SetLocationScreen}
-        options={{ title: "set your location" }}
+        options={{ title: "set your location", headerStyle:{backgroundColor:colors.secondary}, headerTitleStyle:{color:"white"} }}
       />
       <Stack.Screen
         name="menuScreen"

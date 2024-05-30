@@ -18,11 +18,13 @@ import SwipeableRow from "../Components/SwipeableRow";
 import colors from "../styles/colors";
 import Screen from "./../Components/Screen";
 import { reducePointProduct, reduceDiscountProduct } from "../context/basket";
+import { addPoints, reducePoints } from "../context/restaurants";
 import OrderConfirmedScreen from "./OrderConfirmedScreen";
 
 const windowWidth = Dimensions.get("window").width;
 
-function BasketScreen({ navigation }) {
+function BasketScreen({ navigation, route }) {
+  const { id } = route.params;
   const dispatch = useDispatch();
   const {
     discountProducts,
@@ -34,13 +36,21 @@ function BasketScreen({ navigation }) {
     totalPoints,
   } = useSelector((state) => state.basket);
 
+  const handleAddPoints = (id, points) => {
+    dispatch(addPoints({ id, points }));
+  };
+  const handleReducePoints = (id, points) => {
+    dispatch(reducePoints({ id, points }));
+  };
+
   store.subscribe(() => {
     console.log("store changed in basketScreen");
   });
 
   useEffect(() => {
-    console.log(totalBonusPoints);
-    console.log(pointsProducts);
+    console.log(id);
+    // console.log(totalBonusPoints);
+    // console.log(pointsProducts);
   }, []);
 
   const [bonus, setBonus] = useState(totalBonusPoints);
@@ -49,6 +59,9 @@ function BasketScreen({ navigation }) {
   const [preOrder, setPreOrder] = useState(false);
 
   const startCheckout = () => {
+    //here
+    handleAddPoints(id, totalBonusPoints);
+    handleReducePoints(id, totalPoints);
     setPreOrder(false);
     setOrder(true);
     dispatch(basketCleared());

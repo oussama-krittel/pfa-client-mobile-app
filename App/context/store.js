@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import locationReducer from "./location";
 import basketReducer from "./basket";
+import restaurantsReducer from "./restaurants"
 
 const rootReducer = {
   location: locationReducer,
   basket: basketReducer,
-  // Add other reducers here
+  restaurants: restaurantsReducer
 };
 
 const store = configureStore({

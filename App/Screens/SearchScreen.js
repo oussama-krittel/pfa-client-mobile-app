@@ -9,12 +9,14 @@ import {
   Image,
 } from "react-native";
 
-import restaurantData from "../../assets/data/restaurantData";
+import { useSelector } from "react-redux";
 
 function SearchScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const textInputRef = useRef(null);
+
+  const restaurantData = useSelector((state) => state.restaurants);
 
   useEffect(() => {
     // Focus on the text input when the component mounts
@@ -121,9 +123,9 @@ const styles = StyleSheet.create({
   logo: {
     width: 33,
     height: 33,
-    margin:7,
-    marginBottom:3,
-    marginLeft:0,
+    margin: 7,
+    marginBottom: 3,
+    marginLeft: 0,
     borderRadius: 25,
   },
   textContainer: {

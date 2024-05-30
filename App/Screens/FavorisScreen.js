@@ -11,12 +11,14 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../styles/colors";
 
-import restaurantData from "../../assets/data/restaurantData";
+import { useDispatch, useSelector } from "react-redux";
+import { addPoints, reducePoints } from "../context/restaurants";
+import store from "../context/store";
 
 export default function FavorisScreen({ navigation }) {
   const [favorites, setFavorites] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-
+  const restaurantData = useSelector((state) => state.restaurants);
   // Function to handle favoriting an item
   const toggleFavorite = (id) => {
     if (favorites.includes(id)) {

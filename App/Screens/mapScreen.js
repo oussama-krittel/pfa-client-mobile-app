@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import restaurantData from "../../assets/data/restaurantData";
+import {  useSelector } from "react-redux";
+
 import { Ionicons } from "@expo/vector-icons"; // Import Ionicons
 import colors from "../styles/colors";
 import { hexToRgb } from "../styles/hexToRgb";
@@ -17,6 +18,7 @@ import AppText from "../Components/AppText";
 const { width, height } = Dimensions.get("window");
 
 export default function MapScreen({ navigation }) {
+  const restaurantData = useSelector((state) => state.restaurants);
   const mapRef = useRef(null);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
 
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 22,
     color: "white",
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
   rightEmptySpace: {
     width: 40,

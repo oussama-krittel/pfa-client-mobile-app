@@ -7,9 +7,11 @@ import {
   Text,
   Image,
 } from "react-native";
-import restaurantData from "../../assets/data/restaurantData";
+import { useSelector } from "react-redux";
 
 export default function RecentlyUsedScreen({ navigation }) {
+  const restaurantData = useSelector((state) => state.restaurants);
+
   return (
     <View style={styles.container}>
       <FlatList

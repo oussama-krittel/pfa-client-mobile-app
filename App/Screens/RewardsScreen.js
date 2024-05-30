@@ -25,7 +25,9 @@ export default function RewardsScreen({ navigation, route }) {
         <View style={styles.footer}>
           <TouchableOpacity
             style={styles.fullButton}
-            onPress={() => navigation.navigate("basketScreen")}
+            onPress={() => navigation.navigate("basketScreen", {
+              id: route.params.restaurantId,
+            })}
           >
             <Text style={styles.basket}>{selectedItemsCount}</Text>
             <Text style={styles.footerText}>View Basket</Text>

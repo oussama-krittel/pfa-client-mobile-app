@@ -24,7 +24,6 @@ import store from "../context/store";
 import Screen from "../Components/Screen";
 import ParallaxScrollView from "../Components/ParallaxScrollView";
 import AppText from "./../Components/AppText";
-import restaurantData from "../../assets/data/restaurantData";
 
 const VerticalMenu = ({ navigation, restaurantInfo, score }) => {
   if (!restaurantInfo) {
@@ -194,6 +193,9 @@ export default function RestorantScreen({ route, navigation }) {
   const { totalPrice, selectedItemsCount } = useSelector(
     (state) => state.basket
   );
+
+  const restaurantData = useSelector((state) => state.restaurants);
+
   store.subscribe(() => {
     console.log("store changed");
   });
@@ -286,9 +288,6 @@ export default function RestorantScreen({ route, navigation }) {
           navigation={navigation}
           restaurantInfo={restaurantInfo}
           score={restaurantInfo.points ? restaurantInfo.points : 0}
-          //**************************/
-          //update the score to the real score of points by modifing the restaurant data - totalpoints
-          //**************************/
         />
       </ParallaxScrollView>
 
@@ -298,7 +297,11 @@ export default function RestorantScreen({ route, navigation }) {
           <Screen>
             <TouchableOpacity
               style={styles.fullButton}
-              onPress={() => navigation.navigate("basketScreen")}
+              onPress={() =>
+                navigation.navigate("basketScreen", {
+                  id: restaurantInfo.id,
+                })
+              }
             >
               <Text style={styles.basket}>{selectedItemsCount}</Text>
               <Text style={styles.footerText}>View Basket</Text>

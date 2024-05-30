@@ -11,8 +11,10 @@ import BottomSheet from "@gorhom/bottom-sheet";
 import BottomSheetContent from "../Components/BottomSheetContent";
 import LandingScreenHeader from "../Components/LandingScreenHeader";
 import HorizontalScrollComponent from "../Components/HorizontalScrollComponent";
-import restaurantData from "../../assets/data/restaurantData";
-import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
+import { addPoints, reducePoints } from "../context/restaurants";
+
 import store from "../context/store";
 
 const DATA_PER_LIST = 10;
@@ -62,8 +64,16 @@ const calculateDistance = (location1, location2) => {
 export default function LandingScreen({ navigation }) {
   const bottomSheetRef = useRef(null);
   const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
-  const data = restaurantData;
   const userLocation = useSelector((state) => state.location);
+  const data = useSelector((state) => state.restaurants);
+
+  const dispatch = useDispatch();
+  const handleAddPoints = (id, points) => {
+    dispatch(addPoints({ id, points }));
+  };
+  const handleReducePoints = (id, points) => {
+    dispatch(reducePoints({ id, points }));
+  };
 
   store.subscribe(() => {
     console.log("store changed");
